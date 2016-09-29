@@ -1,0 +1,12 @@
+<div>
+    <select ng-model="selected"  ng-hide="!selectEnabled"   ng-options="element as element for element in elements" class="form-control"></select>
+    <nvd3-multi-bar-chart
+            data="barsData"
+            height="400"
+            showXAxis="true"
+            showYAxis="true"
+            xaxisrotatelabels="-90"
+            tooltips="true"
+            showLegend="true">
+    </nvd3-multi-bar-chart>
+</div>

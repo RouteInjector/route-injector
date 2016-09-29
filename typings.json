@@ -1,0 +1,22 @@
+{
+  "name": "routeinjectordemo",
+  "globalDependencies": {
+    "mongoose": "github:DefinitelyTyped/DefinitelyTyped/mongoose/mongoose.d.ts#d1f6bde13f2209be42e86c3686761e8bfcbb50a5",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#0cd5f0a1482dc3149f5446b1d885ef6ac7c57720",
+    "express": "github:DefinitelyTyped/DefinitelyTyped/express/express.d.ts#0cd5f0a1482dc3149f5446b1d885ef6ac7c57720",
+    "serve-static": "github:DefinitelyTyped/DefinitelyTyped/serve-static/serve-static.d.ts#0cd5f0a1482dc3149f5446b1d885ef6ac7c57720",
+    "mime": "github:DefinitelyTyped/DefinitelyTyped/mime/mime.d.ts#0cd5f0a1482dc3149f5446b1d885ef6ac7c57720",
+    "bunyan": "github:DefinitelyTyped/DefinitelyTyped/bunyan/bunyan.d.ts#7577a2f4c134790891c52affdacdae99d802571b",
+    "bunyan-prettystream": "github:DefinitelyTyped/DefinitelyTyped/bunyan-prettystream/bunyan-prettystream.d.ts#7577a2f4c134790891c52affdacdae99d802571b",
+    "morgan": "github:DefinitelyTyped/DefinitelyTyped/morgan/morgan.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
+    "body-parser": "github:DefinitelyTyped/DefinitelyTyped/body-parser/body-parser.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
+    "multer": "github:DefinitelyTyped/DefinitelyTyped/multer/multer.d.ts#0cd5f0a1482dc3149f5446b1d885ef6ac7c57720",
+    "cookie-parser": "github:DefinitelyTyped/DefinitelyTyped/cookie-parser/cookie-parser.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
+    "serve-favicon": "github:DefinitelyTyped/DefinitelyTyped/serve-favicon/serve-favicon.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
+    "express-session": "github:DefinitelyTyped/DefinitelyTyped/express-session/express-session.d.ts#70bf7e2bfeb0d5b1b651ef3219bcc65c8eec117e",
+    "passport": "github:DefinitelyTyped/DefinitelyTyped/passport/passport.d.ts#46719185c564694c5583c4b7ad94dbb786ecad46",
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf",
+    "glob": "github:DefinitelyTyped/DefinitelyTyped/glob/glob.d.ts#bcd5761826eb567876c197ccc6a87c4d05731054",
+    "minimatch": "github:DefinitelyTyped/DefinitelyTyped/minimatch/minimatch.d.ts#bcd5761826eb567876c197ccc6a87c4d05731054"
+  }
+}

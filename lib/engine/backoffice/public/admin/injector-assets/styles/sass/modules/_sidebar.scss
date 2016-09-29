@@ -1,0 +1,254 @@
+/***
+Page sidebar
+***/
+
+/* IE8 fix */
+.ie8 .page-sidebar {
+	width: $sidebar-width;
+	float: left;
+	position: relative;
+	margin-right: -100%;
+}
+
+/* Page Sidebar */
+
+.page-sidebar,
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover {
+	background-color:$bg-color;
+	&.navbar-collapse {
+		padding: 0;
+		box-shadow: none;
+	}
+
+	/* Default sidebar menu */
+	.page-sidebar-menu {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	
+		.panel{
+			background:none;
+			border:none;
+
+			&.active{
+				.panel-heading{
+					a{
+						background: $sidebar-menu-link-bg-color-on-active !important;
+	                    color: $sidebar-menu-link-font-color-on-active !important;
+						.arrow{
+							&:before{
+								color: $sidebar-menu-link-font-color-on-active !important;
+							}
+						}
+						.selected{
+		                    display: block;
+							background-image: none; /* will be set in a theme css file*/
+							float: right;
+							position: absolute;
+							right:0px;
+							top:6px;
+
+							background: none;
+							width: 0;
+							height: 0;
+							border-top: 12px solid transparent;
+							border-bottom: 12px solid transparent;
+							border-right: 12px solid $page-content-solid-bg-color; 
+						}
+
+					}
+				}
+			}
+		}
+		.panel-group{
+			padding:0;
+			float: none;
+		  	margin-bottom: auto;
+			.panel{
+				margin-top: 0;
+			}
+			.panel-heading{
+				display: block;
+				position: relative;
+				margin: 0;
+				border: 0px;
+				padding: 0;
+				text-decoration: none;
+				@include border-radius(0);
+				a{
+                	@include transition(background 0.3s);
+					color: $sidebar-menu-link-font-color; 
+					font-size: $sidebar-menu-link-font-size;
+					font-weight: 300;
+					&:hover{
+						text-decoration: none;
+						background: $sidebar-menu-link-bg-color-on-hover;
+                    	color: $sidebar-menu-link-font-color-on-hover;
+                    }
+                    .arrow{
+						&:before {  
+							float: right;
+							width: 10px;
+							text-align: center;
+							margin-top: -1px;
+							margin-right: 5px;
+							margin-left: 5px;  
+							display: inline;
+							font-size: $sidebar-menu-link-icon-font-size;
+							font-family: FontAwesome;
+							height: auto;
+							content: "\f104";
+							font-weight: 300;
+							text-shadow:none;
+							color: $sidebar-menu-arrow-color;
+						}
+						
+					}
+				}
+				border-top: 1px solid $sidebar-menu-devider-border-color;
+                
+                background:none;
+			  	background-color: #585858;
+                a{
+                	padding: 10px 15px;
+                }
+			}
+			.panel-body{
+				padding:0;
+				border:0;
+			    padding-left: 20px;
+				li{
+					a{
+						//padding-left:40px;
+						display: block;
+						margin: 0;
+						padding: 6px 15px 6px 20px;
+						text-decoration: none;
+						font-size: $sidebar-menu-link-font-size;
+						font-weight: 300;
+						background: none;
+						color: $sidebar-menu-sub-menu-link-font-color;
+
+						&:hover{
+							background: $sidebar-menu-sub-menu-link-bg-color-on-hover !important;
+						}
+					}
+					&.active{
+						a{
+							background: $sidebar-menu-sub-menu-link-bg-color-on-hover !important;
+						}
+					}
+				}
+			}
+		}
+		.accordion-toggle{
+			cursor: pointer;
+			display: block;
+		}
+
+		.sub-menu {
+			list-style: none;
+			display: none;
+			padding: 0;
+			margin: 8px 0px 8px 0px;	
+			
+			li {
+				background: none;
+				margin: 0px;
+				padding: 0px;
+				margin-top: 1px !important;
+
+				> a {					
+					display: block;
+					margin: 0;
+					padding: 6px 15px 6px 43px;
+					text-decoration: none;
+					font-size: $sidebar-menu-link-font-size;
+					font-weight: 300;
+					background: none;
+					color: $sidebar-menu-sub-menu-link-font-color;
+
+					> i {
+						font-size: $sidebar-menu-sub-menu-link-icon-font-size;
+						color: $sidebar-menu-sub-menu-link-icon-font-color;
+					}
+					> i[class^="icon-"],
+                    > i[class*="icon-"] {
+                        color: lighten($sidebar-menu-link-icon-font-color, 5%);  
+                    } 
+
+                    > .arrow {
+                        &:before,
+                        &.open:before { 
+                            color: $sidebar-menu-arrow-color;
+                        }
+                    }
+				}
+
+				&:hover,
+                &.open,
+                &.active {
+                    > a {
+                        background: $sidebar-menu-sub-menu-link-bg-color-on-hover !important;
+
+                        > i {
+                            color: $sidebar-menu-sub-menu-link-icon-font-color-on-hover;
+                            @if $theme-name == "light" {
+                                color: darken($sidebar-menu-link-icon-font-color, 15%); 
+                            } @else if $theme-name == "light2" {
+                                color: darken($sidebar-menu-link-icon-font-color, 15%);  
+                            } @else {
+                                color: lighten($sidebar-menu-link-icon-font-color, 20%);  
+                            }
+                        }
+
+                        > .arrow {
+                            &:before,
+                            &.open:before { 
+                                color: $sidebar-menu-arrow-color-on-hover;
+                            }
+                        }
+                    }
+                }
+			} 
+		}
+	}
+
+	.sidebar-toggler {
+		display: block;
+		cursor: pointer; 
+		opacity: 0.7;
+		filter: alpha(opacity=70);
+		width: 30px;
+		height: 27px;
+		margin-top: 15px;
+		margin-right: 19px;
+		float: right;
+
+		@include border-radius($general-border-radius);  
+
+		&:hover { 
+			filter: alpha(opacity=100);
+			opacity: 1;
+		}
+	}
+}
+
+
+@media (min-width: $screen-md-min) { /* 992px */
+
+	.page-sidebar {
+		width: $sidebar-width;
+		float: left;
+		position: relative;
+		margin-right: -100%;
+
+		.page-full-width & {
+			display: none !important;
+		}
+
+		&.navbar-collapse {
+			max-height: none !important;
+		}
+	}
+}

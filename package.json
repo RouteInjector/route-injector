@@ -1,0 +1,95 @@
+{
+  "name": "route-injector",
+  "version": "1.0.48",
+  "contributors": [
+    {
+      "name": "Alex Albalá",
+      "email": "alex.alaba@alteraid.com"
+    },
+    {
+      "name": "Juan López",
+      "email": "juan.lopez@alteraid.com"
+    },
+    {
+      "name": "Gerard Solé",
+      "email": "g.sole.ca@gmail.com"
+    }
+  ],
+  "description": "RouteInjector",
+  "main": "index.js",
+  "scripts": {
+    "test": "./test-node",
+    "tsd": "./node_modules/.bin/tsd",
+    "typings": "./node_modules/.bin/typings",
+    "gendocs": "./node_modules/.bin/tsd reinstall -so; ./node_modules/.bin/typedoc --out typedoc/ lib/ --module commonjs --target ES5 --exclude \"**/bower_components/**/*.ts\""
+  },
+  "peerDependencies": {
+    "mongoose": "^4.5.8"
+  },
+  "dependencies": {
+    "express": "4.9.8",
+    "body-parser": "~1.8.1",
+    "cookie-parser": "~1.3.3",
+    "morgan": "~1.3.0",
+    "serve-favicon": "~2.1.3",
+    "debug": "~2.0.0",
+    "jade": "*",
+    "async": "0.9.0",
+    "jsonwebtoken": "5.7.0",
+    "lodash": "*",
+    "lodash-contrib": "*",
+    "q": "*",
+    "bunyan": "*",
+    "bunyan-prettystream": "*",
+    "colors": "*",
+    "path": "*",
+    "swagger-ui": "2.0.24",
+    "swagger-node-express": "2.0.3",
+    "node-bugsense": "*",
+    "imgr": "*",
+    "mkdirp": "*",
+    "request": "*",
+    "underscore": "*",
+    "glob": "*",
+    "statusCode": "http://devel200.upc.edu:1234/package/statusCode/latest",
+    "mustache": "*",
+    "change-case": "*",
+    "wordpress-hash-node": "*",
+    "passport-http-bearer": "*",
+    "passport": "*",
+    "multer": "0.1.8",
+    "ejs": "*",
+    "express-session": "*",
+    "deepjson2csv": "*",
+    "json2xls": "*",
+    "minimist": "*",
+    "node-zip": "*",
+    "versiony": "*",
+    "vhost": "*"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-sass": "^1.0.0",
+    "grunt-notify": "0.3.1",
+    "grunt-filerev": "^2.1.2",
+    "grunt-ng-annotate": "*",
+    "grunt-usemin": "^3.0.0",
+    "time-grunt": "^1.0.0",
+    "grunt-preprocess": "*",
+    "grunt-env": "*",
+    "load-grunt-tasks": "^3.1.0",
+    "bower": "*",
+    "jsdoc": "*",
+    "typings": "^1.3.3",
+    "typedoc": "^0.3.12",
+    "typescript": "^1.7.5"
+  }
+}

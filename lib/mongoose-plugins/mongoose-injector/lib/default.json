@@ -1,0 +1,12 @@
+{
+    "id": "_id",
+    "path": "person",
+    "plural": "doctors",
+    "displayField": "name",
+    "enableRefs": true,
+    "get": {},
+    "post": {},
+    "put": {},
+    "delete": {},
+    "search": {}
+}

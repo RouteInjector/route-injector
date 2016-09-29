@@ -1,0 +1,20 @@
+{
+  "name": "angular-schema-form-datepicker",
+  "version": "0.2.1",
+  "description": "Datepicker add-on for schema form",
+  "scripts": {
+    "test": "rm -fr coverage && ./node_modules/karma/bin/karma start --single-run --browsers PhantomJS karma.conf.js"
+  },
+  "author": "Textalk",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.5.6",
+    "gulp-angular-templatecache": "^1.2.1",
+    "gulp-concat": "^2.2.0",
+    "gulp-jscs": "^1.1.0",
+    "gulp-minify-html": "^0.1.1",
+    "gulp-plumber": "^0.6.5",
+    "gulp-uglify": "^0.2.1",
+    "streamqueue": "0.0.5"
+  }
+}

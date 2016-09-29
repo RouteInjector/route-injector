@@ -1,0 +1,12 @@
+<div class="form-group schema-form-select {{form.htmlClass}}">
+    <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
+    <ui-select select-multiple multiple ng-model="$$value$$" separator="form.separator" choices="choices" enum="form.enum" map="form.map" lock="form.locked" url="form.url" ng-disabled="disabled">
+        <ui-select-match placeholder="{{placeholder}}">{{common.prettifyTitle($item.name)}}</ui-select-match>
+        <ui-select-choices
+                group-by="group"
+                repeat="elem.value as elem in availableElems | filter: $select.search"
+                refresh="refreshData($select.search)">
+            {{getTitle(elem)}}
+        </ui-select-choices>
+    </ui-select>
+</div>

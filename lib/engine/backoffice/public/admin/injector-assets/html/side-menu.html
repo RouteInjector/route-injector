@@ -1,0 +1,104 @@
+<div class="page-sidebar navbar-collapse collapse ng-scope">
+    <accordion class="page-sidebar-menu" close-others="true">
+        <accordion-group ng-repeat="(key, obj) in sections.get()" is-disabled="isDisabled"
+                         ng-class="key == actualSection ? 'active' : ''" is-open="isOpen">
+
+
+            <accordion-heading ng-click="openSection(key)">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                {{key}}<!--<i class="pull-right glyphicon glyphicon-chevron-right"></i>-->
+                <span class="selected"></span>
+                <span class="arrow"></span>
+            </accordion-heading>
+            <ul class="nav nav-pills nav-stacked" ng-if="obj">
+                <li ng-repeat="(key, obj) in obj" ng-class="key == actualSchema ? 'active' : ''">
+                    <a href="" ng-if="!isInstanceOf(obj)" href="" ng-click="click(key, key, obj)">
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                        {{common.prettifyTitle(key)}}
+                    </a>
+                    <accordion ng-if="isInstanceOf(obj)" class="page-sidebar-menu" close-others="true">
+                        <div ng-include="'sideMenuTree'">
+
+                        </div>
+                    </accordion>
+                </li>
+            </ul>
+
+        </accordion-group>
+    </accordion>
+</div>
+
+<script type="text/ng-template" id="sideMenuTree">
+    <accordion-group>
+        <accordion-heading ng-click="openSection(key)">
+            <i class="glyphicon glyphicon-chevron-right"></i>
+            {{key}}<!--<i class="pull-right glyphicon glyphicon-chevron-right"></i>-->
+            <span class="selected"></span>
+            <span class="arrow"></span>
+        </accordion-heading>
+        <ul class="nav nav-pills nav-stacked" ng-if="obj">
+            <li ng-repeat="(key, obj) in obj" ng-class="key == actualSchema ? 'active' : ''">
+                <a href="" ng-if="!isInstanceOf(obj)" href="" ng-click="click(key, key, obj)">
+                    <i class="glyphicon glyphicon-chevron-right"></i>
+                    {{common.prettifyTitle(key)}}
+                </a>
+                <accordion ng-if="isInstanceOf(obj)" class="page-sidebar-menu" close-others="true">
+                    <div ng-include="'sideMenuTree'">
+
+                    </div>
+                </accordion>
+                <!--<accordion ng-if="isInstanceOf(obj)" class="page-sidebar-menu" close-others="true">-->
+                    <!--<accordion-group ng-include="'sideMenuTree'">-->
+
+                    <!--</accordion-group>-->
+                <!--</accordion>-->
+            </li>
+        </ul>
+    </accordion-group>
+</script>
+
+<!--<div class="page-sidebar navbar-collapse collapse ng-scope">-->
+<!--<ul style="background-color: white">-->
+<!--<li ng-repeat="(key, obj) in sections.get()" ng-include="'sideMenuTree'"></li>-->
+<!--</ul>-->
+<!--</div>-->
+
+<!--<script type="text/ng-template" id="sideMenuTree">-->
+<!--{{key}}-->
+<!--<ul>-->
+<!--<li ng-repeat="(key, obj) in obj">-->
+<!--<p ng-if="!isInstanceOf(obj)"><a ng-click="click(key, key, obj)">{{key}}</a></p>-->
+<!--<div ng-if="isInstanceOf(obj)" ng-include="'sideMenuTree'"></div>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</script>-->
+
+
+<!--<div class="page-sidebar navbar-collapse collapse ng-scope">-->
+<!--<accordion  class="page-sidebar-menu" close-others="true">-->
+<!--<accordion-group ng-repeat="(sectionName, schemas) in sections" is-disabled="isDisabled" ng-class="sectionName == actualSection ? 'active' : ''" is-open="isOpen">-->
+<!--<accordion-heading ng-click="openSection(sectionName)">-->
+<!--<i class="glyphicon glyphicon-chevron-right"></i>-->
+<!--{{sectionName}}&lt;!&ndash;<i class="pull-right glyphicon glyphicon-chevron-right"></i>&ndash;&gt;-->
+<!--<span class="selected"></span>-->
+<!--<span class="arrow"></span>-->
+<!--</accordion-heading>-->
+<!--<ul class="nav nav-pills nav-stacked" ng-if="schemas">-->
+<!--<li ng-repeat="(schemaName, schemaConf) in schemas" ng-class="schemaName == actualSchema ? 'active' : ''">-->
+<!--<a href="" ng-click="click(sectionName, schemaName, schemaConf)">-->
+<!--<i class="glyphicon glyphicon-chevron-right"></i>-->
+<!--{{common.prettifyTitle(schemaName)}}-->
+<!--</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</accordion-group>-->
+<!--</accordion>-->
+<!--</div>-->
+<!--
+<div>
+    <span>Custom:</span>
+    <ul class="nav nav-pills nav-stacked" ng-if="customMenu">
+        <li ng-repeat="_element in customMenu" ng-class="_element.name == schema ? 'active' : ''"><a href="#{{_element.url}}">{{_element.name}}</a>
+        </li>
+    </ul>
+</div>-->

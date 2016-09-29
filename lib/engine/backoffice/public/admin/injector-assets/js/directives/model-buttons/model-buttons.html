@@ -1,0 +1,49 @@
+<div class="col-lg-12">
+    <a ng-if="config.post && !config.isSingle" class="btn btn-info"
+       href="#/model/{{schema}}/new">{{'MODEL.BUTTONS.NEW'|translate}}</a>
+    <a ng-if="config.delete && !config.isSingle" ng-disabled="!enableDelete()" class="btn btn-danger"
+       ng-click="removeSelected()">{{'MODEL.BUTTONS.DELETE'|translate}}</a>
+    <a ng-if="config.graphs" class="btn btn-primary" href="#/model/{{schema}}/graphs">{{'MODEL.BUTTONS.GRAPHS'|translate}}</a>
+
+    <!-- Single button -->
+    <div ng-if="config.export" class="btn-group" dropdown>
+
+        <a ng-href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+           role="button">
+            {{'MODEL.BUTTONS.EXPORT'|translate}} <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a ng-click="export('csv')">{{'MODEL.BUTTONS.CSV'|translate}}</a></li>
+            <li><a ng-click="export('json')">{{'MODEL.BUTTONS.JSON'|translate}}</a></li>
+            <li><a ng-click="export('json+zip')">{{'MODEL.BUTTONS.JSONS_ZIP'|translate}}</a></li>
+            <li><a ng-click="export('xlsx')">{{'MODEL.BUTTONS.EXCEL'|translate}}</a></li>
+        </ul>
+    </div>
+
+    <!-- Single button -->
+    <div ng-if="config.import" class="btn-group" dropdown>
+
+        <a ng-href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+           role="button">
+            {{'MODEL.BUTTONS.IMPORT'|translate}} <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a ng-click="import('csv')">{{'MODEL.BUTTONS.CSV'|translate}}</a></li>
+            <li><a ng-click="import('json')">{{'MODEL.BUTTONS.JSON'|translate}}</a></li>
+            <li><a ng-click="import('json+zip')">{{'MODEL.BUTTONS.JSONS_ZIP'|translate}}</a></li>
+            <li><a ng-click="import('xlsx')">{{'MODEL.BUTTONS.EXCEL'|translate}}</a></li>
+        </ul>
+    </div>
+
+    <!-- Single button -->
+    <div ng-if="config.extraActions" ng-repeat="(section, actions) in config.extraActions" class="btn-group" dropdown>
+        <a ng-href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+           role="button">
+            {{section}} <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a ng-repeat="action in actions"
+                   ng-click="performAction(action)">{{action.title}}</a></li>
+        </ul>
+    </div>
+</div>

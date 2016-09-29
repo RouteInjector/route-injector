@@ -1,0 +1,46 @@
+<form class="search-in-model" name="searcher" search-in-model ng-model="searchform">
+    <div ng-repeat="elemsearch in searches" class="row search-element">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-btn" dropdown>
+                    <a ng-href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                       ng-disabled="availableFields.length == 0" role="button" aria-expanded="false">
+                        <span ng-bind-html="elemsearch.title || common.prettifyTitle(elemsearch.field)"></span>
+                        <i class="fa fa-angle-down icon-margin-left"></i>
+                    </a>
+                    <ul ng-if="availableFields.length > 0" class="dropdown-menu" role="menu">
+                        <li ng-repeat="field in availableFields"><a ng-click="updateSearch(elemsearch, field)"
+                                                                    ng-bind-html="buildPath(field, schema)"></a>
+                        </li>
+                    </ul>
+                </span>
+
+                <div class="input-icon right">
+                    <i ng-disabled="(elemsearch.value == '') || (elemsearch.value == undefined)"
+                       ng-click="elemsearch.clear()" class="glyphicon glyphicon-remove"></i>
+                </div>
+                <input ng-if="!elemsearch.ref" type="text" placeholder="{{'SEARCH.PLACEHOLDER'|translate:elemsearch.placeholder}}" class="form-control"
+                       ng-model="elemsearch.value"/>
+
+                <!--Select2 for searching against relations-->
+                <search-ref-in-model ng-if="elemsearch.ref"
+                                     elemsearch="elemsearch" ng-model="elemsearch.value"></search-ref-in-model>
+                <span class="input-group-btn">
+                    <a class="btn btn-default" ng-click="elemsearch.remove()"><i
+                            class="glyphicon glyphicon-trash icon-margin-right"></i>{{'SEARCH.DELETE'|translate}}</a>
+                    <!--<button class="btn blue" type="button">Go!</button>-->
+                </span>
+            </div>
+            <!-- /input-group -->
+        </div>
+        <!-- /.col-md-6 -->
+    </div>
+
+    <button id="submitsearch" type="submit" ng-click="search()" class="btn btn-default btn-lg" style="background:#C0EB30;>
+        <span class="glyphicon glyphicon-search icon-margin-right"></span> {{'SEARCH.SEARCH'|translate}}
+    </button>
+
+    <button ng-click="addSearch()" class="btn btn-default btn-lg" ng-disabled="availableFields.length == 0">
+        <span class="glyphicon glyphicon-plus icon-margin-right"></span>{{'SEARCH.ADD_CRITERIA'|translate}}
+    </button>
+</form>

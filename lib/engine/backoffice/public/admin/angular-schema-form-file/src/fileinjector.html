@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+<div class="form-group" ng-class="{'has-error': hasError()}">
+    <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
+
+    <div class="input-group">
+        <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                <img bk-file-view ng-src="{{file}}" filename="$$value$$">
+            </div>
+            {{$$value$$}}
+            <div class="fileinput-preview fileinput-exists thumbnail"
+                 style="max-width: 200px; max-height: 150px;"></div>
+            <div>
+                <span class="btn btn-default btn-file">
+                    <span class="fileinput-new"><span class="glyphicon glyphicon-cloud-upload"></span></span> <!-- upload file -->
+                    <span class="fileinput-exists"><span class="glyphicon glyphicon-pencil"></span></span> <!-- change file -->
+                    <input bk-file-uploader
+                           type="file"
+                           name="file"
+                           path="form.path"
+                           index="{{arrayIndex}}"
+                           ngf-select="true" ng-model="myFiles" ngf-change="fileExists=false; onFileSelect($files)">
+                </span>
+                <a href=" #" class="btn btn-default fileinput-exists" data-dismiss="fileinput"><span class="glyphicon glyphicon-remove"></span></a> <!-- discard -->
+                <a ng-if="fileExists" download="$$value$$" ng-href="{{file}}" target="_self" class="btn btn-default"><span class="glyphicon glyphicon-cloud-download"></span></a> <!-- download -->
+                <a ng-if="fileExists" ng-click="deleteFile(arrayIndex)" class="btn btn-default"><span class="glyphicon glyphicon-trash"></span></a> <!-- delete from server -->
+            </div>
+        </div>
+    </div>
+    <span class="help-block">{{ (hasError() && errorMessage(schemaError())) || form.description}}</span>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>

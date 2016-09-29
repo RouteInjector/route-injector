@@ -1,0 +1,6 @@
+{
+  "name": "mongoose-injector",
+  "version": "0.0.2",
+  "description": "Mongoose injector plugin to be used with route injector",
+  "main": "index.js"
+}

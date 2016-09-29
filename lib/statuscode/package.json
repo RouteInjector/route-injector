@@ -1,0 +1,6 @@
+{
+  "name": "statusCode",
+  "version": "0.0.1",
+  "description": "StatusCode functions",
+  "main": "statusCode.js"
+}

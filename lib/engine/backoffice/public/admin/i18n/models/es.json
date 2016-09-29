@@ -1,0 +1,10 @@
+{
+  "MODELS": {
+    "TITLE": "Modelos",
+    "SUBTITLE": "Tus modelos disponibles de RouteInjector",
+    "TABLE": {
+      "HMODEL": "Modelo",
+      "CREATE": "Crear"
+    }
+  }
+}

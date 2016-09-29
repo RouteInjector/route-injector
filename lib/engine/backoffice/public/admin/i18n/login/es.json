@@ -1,0 +1,13 @@
+{
+  "LOGIN": {
+    "TITLE": "Bienvenido",
+    "SUBTITLE": "Por favor, entra",
+    "SIGNIN": "Entrar",
+    "REMEMBER": "Recodar cuenta",
+    "PHOLDER": {
+      "USER": "Usuario",
+      "PASS": "Contraseña"
+    },
+    "ERROR": "Utilitza un usuario y contraseña"
+  }
+}

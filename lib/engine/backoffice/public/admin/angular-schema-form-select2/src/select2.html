@@ -1,0 +1,69 @@
+<style>
+    .select2 > .select2-choice.ui-select-match {
+        /* Because of the inclusion of Bootstrap */
+        height: 29px;
+    }
+
+    .selectize-control > .selectize-dropdown {
+        top: 36px;
+    }
+</style>
+
+<div class="form-group {{form.htmlClass}}" ng-class="{'has-error': hasError()}">
+    <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
+
+    <div class="input-group">
+        <ui-select select2-search
+                   ng-show="form.key"
+                   ng-model="$$value$$"
+                   ng-model-options="form.ngModelOptions"
+                   ng-disabled="form.readonly"
+                   sf-changed="form"
+                   ref="form.ref"
+                   query="form.query"
+                   shard="form.shard"
+                   depends-on="form.dependsOn">
+            <ui-select-match allow-clear="true"
+                    ng-model="$$value$$" placeholder="Search for {{form.title}}">
+                {{printSelectedElement($select.selected)}}
+            </ui-select-match>
+            <ui-select-choices
+                    sf-changed="form"
+                    ng-model="$$value$$" refresh="search($select)" refresh-delay="0"
+                    repeat="selectIdField(item) as item in searchRes">
+                <div ng-bind-html="selectDisplayField(item) | highlight: $select.search"></div>
+                <small>
+                    <i>&lt;<span ng-bind-html="selectIdField(item)"></span>&gt;</i>
+                </small>
+            </ui-select-choices>
+        </ui-select>
+        <span class="input-group-btn">
+            <create-update-modal class="btn btn-primary"
+                                 ng-model="$$value$$"
+                                 sf-changed="form"
+                                 ref="form.ref" ng-click="open()">New {{form.ref}}
+            </create-update-modal>
+            <create-update-modal class="btn btn-warning"
+                                 ng-model="$$value$$"
+                                 sf-changed="form"
+                                 ref="form.ref" type="edit" ng-show="$$value$$" ng-click="open()">Edit
+            </create-update-modal>
+            <!--<button class="btn btn-primary" ng-click="open()">Create {{form.title}}</button>-->
+        </span>
+    </div>
+    <span class="help-block">{{ (hasError() && errorMessage(schemaError())) || form.description}}</span>
+</div>
+
+<script type="text/ng-template" id="createUpdateModal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Create a new {{schema.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <form name="ngForm" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="submitForm(ngForm,model)">
+            <input type="submit" id="submit-form-{{schema.title}}" class="hidden"/></form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        <label class="btn btn-primary" for="submit-form-{{schema.title}}">Save</label><!--Ñapon del 15, pero fa el submit sense haver de fer coses rares :)-->
+    </div>
+</script>

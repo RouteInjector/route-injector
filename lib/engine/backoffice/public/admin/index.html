@@ -1,0 +1,148 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <link rel="shortcut icon" href="{{configs.app.favicon}}"/>
+    <base href="{{configs.backoffice.location}}">
+    <title ng-bind="configs.app.name">RouteInjector</title>
+
+    <!--TODO Remove ñapa css-->
+    <link rel="stylesheet" href="dist/css/inject.css"/>
+    <link rel="stylesheet" href="dist/css/cols.css"/>
+    <!--END TODO Remove ñapa css-->
+
+    <!--TODO css-scss compatibility-->
+    <link rel="stylesheet" href="dist/css/codemirror/lib/codemirror.css"/>
+    <link rel="stylesheet" href="dist/css/codemirror/addon/fold/foldgutter.css"/>
+    <link rel="stylesheet" href="dist/css/nvd3/nv.d3.css"/>
+    <link rel="stylesheet" href="dist/css/angular-ui-select/dist/select.min.css"/>
+    <link rel="stylesheet" href="dist/css/cinimex-angular-datepicker/dist/index.css"/>
+    <link rel="stylesheet" href="dist/css/ngDialog/css/ngDialog.min.css"/>
+    <link rel="stylesheet" href="dist/css/ngDialog/css/ngDialog-theme-default.min.css"/>
+    <link rel="stylesheet" href="dist/css/ngDialog/css/ngDialog-theme-plain.min.css"/>
+    <link rel="stylesheet" href="dist/css/ngDialogStyle.css"/>
+    <!--END TODO css-scss compatibility-->
+
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.css'
+          type='text/css' media='all'/>
+    <link rel="stylesheet" href="dist/css/main.css"/>
+
+
+    <asset-loader src="files" type="css"></asset-loader>
+    <asset-loader src="pages" type="css"></asset-loader>
+
+</head>
+<body ng-class="{login: login}"
+      class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid ng-cloak">
+
+
+<div class="m-app-loading"><!-- HACKY CODE WARNING: I'm putting Style block inside directive so that it will be removed from the DOM when we remove the directive container. --> <style type="text/css"> div.m-app-loading{position: fixed; z-index: 10001;}div.m-app-loading div.animated-container{background-color: #333333; bottom: 0px; left: 0px; opacity: 1.0; position: fixed; right: 0px; top: 0px; z-index: 999999;}/* Used to initialize the ng-leave animation state. */ div.m-app-loading div.animated-container.ng-leave{opacity: 1.0; transition: all linear 200ms; -webkit-transition: all linear 200ms;}/* Used to set the end properties of the ng-leave animation state. */ div.m-app-loading div.animated-container.ng-leave-active{opacity: 0;}div.m-app-loading div.messaging{color: #FFFFFF; font-family: monospace; left: 0px; margin-top: -37px; position: absolute; right: 0px; text-align: center; top: 50%;}div.m-app-loading h1{font-size: 26px; line-height: 35px; margin: 0px 0px 20px 0px;}div.m-app-loading p{font-size: 18px; line-height: 14px; margin: 0px 0px 0px 0px;}</style> <div class="animated-container"> <div class="messaging"> <h1> Loading... </h1> </div></div></div>
+
+
+<!-- HEADER AND NAVBAR -->
+<header ng-controller="NavbarController">
+    <nav class="page-header navbar navbar-fixed-top">
+        <div class="page-header-inner">
+            <div class="page-logo">
+                <a class="navbar-brand" href="#/"><img ng-if="configs.app.logo" alt="Brand" height="20"
+                                                       ng-src="{{configs.app.logo}}">
+                    <span>{{configs.app.name}}</span>
+                </a>
+            </div>
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse"
+               data-target=".navbar-collapse">
+                <i class="glyphicon glyphicon-menu-hamburger"></i>
+            </a>
+
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right" ng-controller="ShardingController">
+                    <li class="dropdown" ng-if="shardKey">
+                        <a ng-href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">{{shardKeyText}}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="shardValue in shardValues" ng-click="setShard(shardValue)">
+                                <a>{{shardValue}}</a></li>
+                            <li ng-if="!locked" class="divider"></li>
+                            <li ng-if="!locked" ng-click="removeShard()"><a>{{'NAVBAR.REMOVE_SHARD'|translate}}</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <p ng-if="user && allowedUser" class="navbar-text">
+                            {{'NAVBAR.SIGNED_IN_AS'|translate}}{{user.login}}
+                            ({{user.role}})</p>
+                    </li>
+                    <!--<li>
+                        <p class="navbar-text"><a class="navbar-link" ng-href="#/logout"><span class="glyphicon glyphicon-log-out"></span> </a></p>
+                    </li>-->
+                    <li class="dropdown dropdown-quick-sidebar-toggler">
+                        <a href="" ng-click="logout()" class="dropdown-toggle">
+                            <i class="glyphicon glyphicon-log-out"></i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav pull-right" ng-controller="TranslateController">
+                    <li class="dropdown" ng-if="showLanguages">
+                        <a ng-href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">{{'NAVBAR.LANGUAGE'|translate}}
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="language in languages"><a ng-click="use(language)">{{language}}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="page-container">
+    <div class="page-sidebar-wrapper" ng-controller="MainController" ng-if="$root.allowedUser">
+        <side-menu></side-menu>
+    </div>
+    <div class="page-content-wrapper">
+        <div class="page-content" ng-if="$root.allowedUser" ng-view>
+
+        </div>
+
+        <div ng-if="!$root.allowedUser" ng-view>
+
+        </div>
+    </div>
+    <!--In this div the different angular screens will be loaded-->
+</div>
+<footer>
+    <div class="container-fluid">
+        <p class="navbar-text">RouteInjector - 2015</p>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a ng-href="http://www.alteraid.com" target="_blank">AlterAid</a></li>
+            <li><a ng-href="http://www.ondho.com" target="_blank">Ondho</a></li>
+        </ul>
+    </div>
+</footer>
+
+<script type="text/ng-template" id="dialogVersionMismatch">
+    <div class="ngdialog-message">
+        <h2>{{'VERSION_DIALOG.TITLE' | translate}}</h2>
+
+        <div>{{'VERSION_DIALOG.MSG' | translate}}</div>
+    </div>
+    <div class="ngdialog-buttons mt">
+        <button type="button" class="ngdialog-button ngdialog-button-primary" onclick="window.location.reload()">
+            {{'VERSION_DIALOG.BUTTON' | translate}}
+        </button>
+    </div>
+</script>
+
+<script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+<script src="dist/routeInjector-angular-libs.min.js"></script>
+<script src="dist/routeInjector.min.js"></script>
+<script type='text/javascript'
+        src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>
+
+<asset-loader src="files" type="js"></asset-loader>
+<asset-loader src="pages" type="js"></asset-loader>
+</body>
+</html>

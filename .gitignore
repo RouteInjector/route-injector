@@ -1,0 +1,13 @@
+**/node_modules/*
+.sass-cache
+lib/engine/backoffice/public/admin/dist/
+lib/engine/backoffice/public/admin/bower_components/
+
+**/.idea/*
+**/bower_components/*
+
+typings
+
+**/typedoc/*
+
+*.log

@@ -1,0 +1,15 @@
+.bowerrc
+Gruntfile.js
+tsconfig.json
+typings.json
+
+# Ignore sources on package.json
+lib/engine/backoffice/public/admin/angular-*/
+lib/engine/backoffice/public/admin/injector-assets
+lib/engine/backoffice/public/admin/bower_components
+lib/engine/backoffice/public/admin/ngf-upload-patched
+
+**/.idea/*
+typings
+**/typedoc/*
+*.log

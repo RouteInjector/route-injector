@@ -1,0 +1,7 @@
+{
+  "VERSION_DIALOG": {
+    "TITLE": "Nueva actualización disponible",
+    "MSG": "El servidor ha sido actualizado. Es altamente recomendable refrescar esta página para evitar errores inesperados",
+    "BUTTON": "Refrescar"
+  }
+}

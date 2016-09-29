@@ -1,0 +1,32 @@
+$phone: '(min-width: 480px)';
+$tablet-portrait: '(min-width: 767px)';
+$tablet-landscape-desktop: '(min-width: 979px)';
+$large-desktop: '(min-width: 1200px)';
+$non-retina: 'screen and (-webkit-max-device-pixel-ratio: 1)';
+$retina: 'screen and (-webkit-min-device-pixel-ratio: 2)';
+
+
+// Breakpoints Map
+// ---------------
+// Stores variables for all breakpoints used for the site.
+// - Uses the `mappy-bp()` mixin to output values min-width or max-with.
+// - Optionally allows for portrait or landscape orientation
+//
+// See https://github.com/zellwk/mappy-breakpoints for more info.
+// ================
+
+$breakpoints: (
+        "small"     : 320px,
+        "small+1"   : 400px,
+        "med-1"     : 560px,
+        "med"       : 640px,
+        "med+1"     : 700px,
+        "large-1"   : 900px,
+        "large"     : 1000px,
+        "large+1"   : 1100px,
+        "wide-1"    : 1200px,
+        "wide"      : 1400px,
+        "wide+1"    : 1500px,
+        "mega-1"    : 1600px,
+        "mega"      : 1800px,
+);

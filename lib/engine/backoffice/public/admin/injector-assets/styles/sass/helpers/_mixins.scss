@@ -1,0 +1,351 @@
+// ==========
+// MIXINS
+// -----
+// This file is for you to include mixins that
+// you have created for your project.
+//
+// I have included a few of mine that I constantly use.
+// Feel free to add new mixins over here,
+// ==========
+
+// ==========
+// ADD-CONTEXT
+// -----
+// Adds current context to the $contexts map that is used
+// to store all contexts for all susy items for its children
+//
+// USAGE:
+// -----
+// If parent context was previously declared,
+// use with either nested or susy-breakpoint:
+//
+// .no-parent {
+//   @include susy-breakpoint(600px, 9) {
+//     @include add-context(content, med, 6)
+//   }
+// }
+//
+// If parent context was declared previously,
+// use with get-context:
+//
+// .has-parent {
+//   @include get-context(content, med) {
+//     @include add-context(gallery, med, 3);
+//   }
+// }
+// ==========
+@mixin add-context($layout, $breakpoint, $span, $location: null) {
+  @if type-of($location) == "string" {
+    $contexts: _susy-deep-set($contexts, $layout, $breakpoint, $span of susy-get(columns) susy-get(gutter) $location) !global;
+  }
+  @else {
+    $contexts: _susy-deep-set($contexts, $layout, $breakpoint, $span of susy-get(columns) susy-get(gutter) at $location) !global;
+  }
+}
+// ==========
+// GET-CONTEXT
+// -----
+// Gets the context from the $contexts map and include a
+// nested wrapper to use with the contents of the context.
+//
+// Usage:
+// ------
+//
+// .test {
+//   @include breakpoint(large) {
+//      @include get-context(content,large) {
+//        @include span(6);
+//      }
+//   }
+// }
+//
+// ==========
+@mixin get-context($keys...) {
+  $context: get-context($keys...);
+  @include nested($context) {
+    @content;
+  }
+}
+
+// ==========
+// CLEARFIX FOR IE8 & ABOVE
+// -----
+// http://css-tricks.com/snippets/css/clear-fix/
+// ==========
+
+@mixin cf {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// ==========
+// IMAGE-REPLACEMENT
+// -----
+// Replaces text with background images.
+// Requires inline-block or block display
+// http://www.zeldman.com/2012/03/01/replacing-the-9999px-hack-new-image-replacement/
+// ==========
+
+@mixin image-replacement {
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+}
+
+// ==========
+// IS-INVISIBLE
+// -----
+// Makes element invisible!
+// Remains visible for accessibility
+// http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+// ==========
+
+@mixin is-invisible {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  border: 0;
+}
+
+// ==========
+// IS-VISIBLE
+// -----
+// Turns off the element-invisible effect.
+// ==========
+
+@mixin is-visible {
+  position: static;
+  clip: auto;
+  height: auto;
+  width: auto;
+  overflow: auto;
+}
+
+// ==========
+// PLACEHOLDER
+// -----
+// Changes Placeholder color
+// ==========
+@mixin placeholder($color) {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    color: $color;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    color: $color;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+}
+
+// ==========
+// SELECTION
+// -----
+// Changes background color and text color when text is selected
+// ==========
+@mixin selection($bgColor, $textColor) {
+  &::-moz-selection {
+    background: $bgColor;
+    color: $textColor;
+  }
+  &::selection {
+    background: $bgColor;
+    color: $textColor;
+  }
+}
+
+// ==========
+// SHAPE MIXINS
+// -----
+// Shapes availble within this mixin files are:
+//
+// Circle
+// Triangle
+// ==========
+
+@mixin circle($width) {
+  width: $width;
+  height: $width;
+  border-radius: 100%;
+}
+
+@mixin triangle($dir, $size, $color) {
+  border: $size transparent solid;
+  @if $dir == "top" or $dir == "up" {
+    border-bottom-color: $color;
+  }
+  @else if $dir == "right" or $dir == "after" {
+    border-left-color: $color;
+  }
+  @else if $dir == "bottom" or $dir == "down" {
+    border-top-color: $color;
+  }
+  @else if $dir == "left" or $dir == "before" {
+    border-right-color: $color;
+  }
+}
+
+// ==========
+// TYPE-SCALE
+// -----
+// Gets font-size and baseline from typography map located
+// in variables/typography and creates the necessary
+// font-size and line-height property in CSS with the
+// compass vertical rhythm.
+//
+// This uses the @include adjust-font-size-to mixin and
+// requires Compass Vertical Rhythm to be used.
+//
+// https://medium.com/p/8e51498c3713
+// ==========
+@mixin type-scale($scale, $map: $type-scale) {
+  $font-size: map-fetch($map, $scale font-size);
+  $base-lines: map-fetch($map, $scale base-lines);
+  @include adjust-font-size-to($font-size, $base-lines);
+}
+
+$rem-baseline: 16px !default;
+$rem-fallback: true !default;
+$rem-px-only: false !default;
+
+@mixin transition($args) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin letter-spacing($letterspacing) {
+  letter-spacing: $letterspacing/1000;
+}
+
+
+/*
+@mixin font-size($sizeValue: 1.6, $line: $sizeValue * 1.5){
+  font-size: ($sizeValue * 1) + px;
+  line-height: ($line * 1) + px;
+  font-size: ($sizeValue / 10) + rem;
+  line-height: ($line / 10) + rem;
+}
+
+@mixin font-size($size, $line-height, $weight: null) {
+  font-size: $size; // IE fix
+  font-size: ($size /$rem-baseline) * 1rem;
+  @if $weight != null {
+    font-weight: $weight;
+  }
+  line-height: $line-height;
+}
+*/
+
+
+// list-separator polyfill by Hugo Giraudel (https://sass-compatibility.github.io/#list_separator_function)
+@function rem-separator($list) {
+  @if function-exists("list-separator") == true {
+    @return list-separator($list);
+  }
+
+  $test-list: ();
+  @each $item in $list {
+    $test-list: append($test-list, $item, space);
+  }
+
+  @return if($test-list == $list, space, comma);
+}
+
+@mixin rem-baseline($zoom: 100%) {
+  font-size: $zoom / 16px * $rem-baseline;
+}
+
+@function rem-convert($to, $values...) {
+  $result: ();
+  $separator: rem-separator($values);
+
+  @each $value in $values {
+    @if type-of($value) == "number" and unit($value) == "rem" and $to == "px" {
+      $result: append($result, $value / 1rem * $rem-baseline, $separator);
+    } @else if type-of($value) == "number" and unit($value) == "px" and $to == "rem" {
+      $result: append($result, $value / ($rem-baseline / 1rem), $separator);
+    } @else if type-of($value) == "list" {
+      $result: append($result, rem-convert($to, $value...), $separator);
+    } @else {
+      $result: append($result, $value, $separator);
+    }
+  }
+
+  @return $result;
+}
+
+@function rem($values...) {
+  @if $rem-px-only {
+    @return rem-convert(px, $values...);
+  } @else {
+    @return rem-convert(rem, $values...);
+  }
+}
+
+@mixin rem($properties, $values...) {
+  @if type-of($properties) == "map" {
+    @each $property, $values in $properties {
+      @include rem($property, $values...);
+    }
+  } @else {
+    @each $property in $properties {
+      @if $rem-fallback or $rem-px-only {
+        #{$property}: rem-convert(px, $values...);
+      }
+      @if not $rem-px-only {
+        #{$property}: rem-convert(rem, $values...);
+      }
+    }
+  }
+}
+
+//@include ghost-button("Trebuchet", 12px, #ffffff, 5px, #34dec6, 4px, 300ms, #000000 );
+@mixin ghost-button($font, $font-size, $font-color, $border-size, $border-color, $padding, $transition-speed, $hover-color)
+{
+  display:inline-block;
+  text-decoration:none;
+  text-transform:uppercase;
+  //font-family: $font;
+  @include head-font();
+  //font-size: $font-size;
+  //@include font-size($font-size);
+  @include rem(font-size,  $font-size);
+  //padding:$padding;
+  @include rem(padding, $padding);
+  line-height: 0;
+  color:$font-color;
+  border:$border-size solid $border-color;
+ // @include transition( color $transition-speed, background $transition-speed);
+  -webkit-transition: color $transition-speed, background $transition-speed;
+  transition: color $transition-speed, background $transition-speed;
+  //@include letter-spacing(140);
+  @include rem(letter-spacing, 0.1rem);
+  &:hover
+  {
+    background:$border-color;
+    color:$hover-color;
+  }
+}
+// ==========
+// SHAPE MIXINS
+// ==========
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
+  background-clip: padding-box; /* stops bg color from leaking outside the border: */
+}

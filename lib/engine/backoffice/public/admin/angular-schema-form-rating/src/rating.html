@@ -1,0 +1,4 @@
+<div class="form-group" ng-class="{'has-error': hasError()}">
+    <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
+    <rating bk-rating ng-model="$$value$$" max="form.maxValue" min="form.minValue" state-on="form.iconOn" state-off="form.iconOff"></rating>
+</div>

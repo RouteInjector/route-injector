@@ -1,0 +1,44 @@
+/* TEAM */
+
+    Backend & Frontend: Gerard Solé
+    Contact: g.sole.ca [at] gmail.com
+    Twitter: @GerardSoleCa
+
+    Backend & Frontend: Alex Albalà
+    Contact: alex.albala [at] alteraid.com
+
+    Backend & Frontend: Juan López
+    Contact: juan.lopez [at] alteraid.com
+
+/* THANKS */
+
+    Backend: Santi Peréz
+    Contact s.perez [at] ondho.com
+
+    Backend: Eric Lara
+    Contact: e.lara [at] ondho.com
+
+    Design: Laura Jové
+    Contact: laura [at] ondho.com
+
+    Ariadna Ginjaume
+    Contact: ariadna [at] ondho.com
+
+    Òscar Villacampa
+    Contact: oscar@ [at] ondho.com
+
+/* FRAMEWORK */
+
+    Company: http://alteraid.com
+    Contact: info@alteraid.com
+
+    Technologies: NodeJS, AngularJS, MongoDB and lots of caffeine
+    Language: Català / Castellano / English
+    IDE: ATOM, VIM, WebStorm
+
+/* CURRENT PROJECTS USING THIS FRAMEWORK */
+
+    http://www.mycook.es/
+    https://asbarcelona.com
+    https://www.aaaida.com
+    https://careup.aaaida.com

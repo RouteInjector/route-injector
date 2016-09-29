@@ -1,0 +1,24 @@
+{
+  "MODEL": {
+    "SUBTITLE": "Listando todos los elementos",
+    "ITEMS_PER_PAGE": "Elementos por página",
+    "ALERT": {
+      "TITLE": "¡Alerta!",
+      "BODY": "¿Estás seguro?",
+      "BACK": "Volver",
+      "YES": "Sí"
+    },
+    "BUTTONS": {
+      "NEW": "Nuevo",
+      "DELETE": "Borrar",
+      "GRAPHS": "Gráficas",
+      "IMPORT": "Importar",
+      "EXPORT": "Exportar",
+      "CSV": "CSV",
+      "JSON": "JSON",
+      "JSONS_ZIP": "JSONs ZIP",
+      "EXCEL": "Excel",
+      "VIEW": "Ver"
+    }
+  }
+}
