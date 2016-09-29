@@ -1,5 +1,7 @@
 # Route Injector
 
+[![Build Status](https://travis-ci.org/RouteInjector/RouteInjector.svg?branch=master)](https://travis-ci.org/RouteInjector/RouteInjector)
+
 Web framework to quick bootstrap CRUD applications for [node](http://nodejs.org/)
 
 ## Installation
