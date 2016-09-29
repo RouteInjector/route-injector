@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "6"
+sudo: false
+script:
+  - ./command.sh install
+  - ./command.sh build
