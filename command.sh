@@ -86,6 +86,21 @@ typings(){
     ./node_modules/.bin/typings install
 }
 
+test(){
+    npm link
+    cd tests
+    for D in *; do
+        if [ -d "${D}" ]; then
+            cd "${D}"
+            npm install
+            npm link route-injector
+            RI_ENV=test $DIR/node_modules/.bin/mocha --preserve-symlinks *
+            cd ..
+        fi
+    done
+    cd $DIR
+}
+
 help() {
   echo -e -n "$BLUE"
   echo "-----------------------------------------------------------------------"

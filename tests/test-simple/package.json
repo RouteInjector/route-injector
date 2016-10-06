@@ -1,0 +1,12 @@
+{
+  "name": "test-simple",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "mongoose": "^4.5.8",
+    "statusCode": "http://147.83.113.200:1234/package/statusCode/latest"
+  },
+  "devDependencies": {
+    "supertest": "^1.1.0"
+  }
+}

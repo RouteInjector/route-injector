@@ -1,13 +1,19 @@
+sudo: false
+services: mongodb
+
 language: node_js
 node_js:
   - '6'
-sudo: false
+
+install:
+  - "./command.sh install"
 
 script:
-  - "./command.sh install"
   - "./command.sh build"
+  - "./command.sh test"
 
 before_deploy: "./command.sh release"
+
 deploy:
   provider: npm
   email: g.sole.ca@gmail.com
@@ -16,3 +22,14 @@ deploy:
   on:
     tags: true
     repo: RouteInjector/RouteInjector
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+  slack:
+    secure: md0LdTHXFkbgRytuYn389fR/NI+sbnvQHJj3CKWAlhtwpw2jD2YdxUFJQv/la3fxDOVyfbkmhltd1lsyakqO6ak/JC42NkLAzbno3f35FVAcpthroLOd4RAFzcN3vSWZwdzBcAayUOElEkvc4nafu5MkTJ5PaS3drazeV7CRuF/OBECW2UpADYFwOjzvm5zT5FO7Ymb4LCdJ5PdvDyNnCY/6pmS1jAX4YK7mlN6N6+dhuNAgsbKFSElmn11qLwklKge7yFC+KPxu28UZhkr53NBZTtOEf7tt9dm9vr2y2OeMJqckmFw5FlaBdP0PjfgOExyULF+jH6YdbKnruoKXNuDEG/rSutAnhZtpQG9e6OnJC7BtjlvJIo3AXKtrz/MyKR5yguQ5fqHrysYt2Lk7CYwWOJS38EY36UYJHFPduT9NoFhCkGSWKlWRgZdt89GoT2wzhXW2L5/lRpfsPaUayOwUkrc9eu0owhA2Z6wXp4wdlkQDHgoXZ93jY5JsuFyDOobtg2oBDQT/NSjAPNt/SLyY2B5cS0CuGzln5x/W0XJ8law4YUHcCVBqPC3m7SNABQdkMiNmevc5UJITWnfA2+3k3lRvZWG9yUGadiFNB+9bco3aDB4gBu4YyG5yipchJiitd5XjR/aV4hqugmAz6wDAbDkxz5+EttJf6SLfD18=
+    template:
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"

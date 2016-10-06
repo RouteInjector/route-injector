@@ -13,3 +13,5 @@ lib/engine/backoffice/public/admin/ngf-upload-patched
 typings
 **/typedoc/*
 *.log
+
+tests
