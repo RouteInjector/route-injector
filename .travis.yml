@@ -7,7 +7,7 @@ script:
   - "./command.sh install"
   - "./command.sh build"
 
-before_deploy: "./command.sh deploy"
+before_deploy: "./command.sh release"
 deploy:
   provider: npm
   email: g.sole.ca@gmail.com
