@@ -40,32 +40,32 @@ clean(){
     log "Clean ENDED"
 }
 
-version(){
-    log "Setting version"
-    cd src
-    BRANCH=$(git branch | awk '/^\*/{print $2}')
-    VTAG=$(git describe --tags --abbrev=0)
-    TAG=${VTAG:1}
-    NUM_COMMITS=$(git log `git describe --tags --abbrev=0`..HEAD --oneline | wc -l | xargs)
-    VER=${TAG%.*}
-    VER=$VER.$NUM_COMMITS
-    npm version $VER
-    cd $DIR
-    log "Version: $VER"
-}
+#version(){
+#    log "Setting version"
+#    BRANCH=$(git branch | awk '/^\*/{print $2}')
+#    VTAG=$(git describe --tags --abbrev=0)
+#    TAG=${VTAG:1}
+#    NUM_COMMITS=$(git log `git describe --tags --abbrev=0`..HEAD --oneline | wc -l | xargs)
+#    VER=${TAG%.*}
+#    VER=$VER.$NUM_COMMITS
+#    npm version $VER
+#    cd $DIR
+#    log "Version: $VER"
+#}
+
 build() {
     log "Build STARTED"
     install
     transpile
     log "Build ENDED"
 }
+
 release(){
     log "Release STARTED"
     install
     transpile
-    version
+#    version
     clean
-    publish_injector
     log "Release ENDED"
 }
 
@@ -95,9 +95,6 @@ help() {
   echo "   > build - Install dependencies and transpile code"
   echo "   > release - Release a new version"
   echo "   > test - Run tests"
-  echo "   > releaseProfiler - Release Profiler Plugin"
-  echo "   > releaseHistory - Release History Plugin"
-  echo "   > releaseStatuscode - Release StatusCode Library"
   echo "   > transpile - Install typings and transpile typecsript to javascript"
   echo "-----------------------------------------------------------------------"
   echo -e -n "$NORMAL"

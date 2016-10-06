@@ -1,7 +1,18 @@
 language: node_js
 node_js:
-  - "6"
+  - '6'
 sudo: false
+
 script:
-  - ./command.sh install
-  - ./command.sh build
+  - "./command.sh install"
+  - "./command.sh build"
+
+before_deploy: "./command.sh deploy"
+deploy:
+  provider: npm
+  email: g.sole.ca@gmail.com
+  api_key:
+    secure: DMexa+oQzxL0ebJetn3+R6/IYJXTkRsvPBA9zFZUwbIK4gImo9da/G/9ziKR7vSBXcT2zFFcTPcK4Pg9ncQpj+LsvC8YGR8OlSDR9bU9yg8vEO5UzBKrdYNkDUfeqD1hAHPyLm3DNqLPluJPpSR8+tcrzt015y3eulnd8lZdgsmmQCCLOeEp2bGxdMWSUVcr+qeCBYiXvMPKoHBa2igZwPD2Mjg3e/fyQnlzvPm3IzWwpM1ldI0i1ujSVMubVrXnQBV3Ws2rXizAWfLS9eTRCPeE+tL5/BJr9jd2eaa5pHO7XKgxZ7CsqO1fPqT19VVXuBphRY1k/mC3OSvROe1UUfvDxJYdWoJaw1afqCec5V+plLjej1L3DB7AccuWS6Nqqxun3Z86SFNXXab2EVx8/gzmuVCe3OAlhC7V+7/3LZdxbr/STEOaT3Vq3/nU8mVPWvyKzOmo1g7xmGt92DedFq0fkgZ8UYWUqLsyxQ3mg+LHBvahEu1U48Zeouw0Mk8DKbvAbcowyyQfuCz8mQ4T+GIDeODBP/s+2W99Q0Z85DHhRNWgFsxAL3gagkD35cQmpc15I4F1O9ufDmOd+wYHNcsalbDgfev6zxNGVtyal5cYuM3HkOZRzozkMiAlTpiZYr6dDlZKMN8HXlqDsdpX/A2Jsh5tYAWEBtoedPtQZ1s=
+  on:
+    tags: true
+    repo: RouteInjector/RouteInjector
