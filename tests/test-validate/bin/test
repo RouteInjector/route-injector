@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+module.exports = function (cb) {
+    var routeinjector = require('route-injector');
+    routeinjector.start(function () {
+        console.log("LOADED ROUTEINJECTOR");
+        cb(routeinjector);
+    });
+};
