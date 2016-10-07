@@ -25,9 +25,9 @@ install(){
     log "Install STARTED"
     npm install
     check_exit
-    bower install --allow-root
+    $(npm bin)/bower install --allow-root
     check_exit
-    grunt dist
+    $(npm bin)/grunt dist
     check_exit
     log "Install ENDED"
 }
