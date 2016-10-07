@@ -22,6 +22,10 @@ deploy:
   on:
     tags: true
     repo: RouteInjector/RouteInjector
+    
+addons:
+    code_climate:
+        repo_token: ccd09456360940e25548406da9b0427dd12cd1ab07c040ea302b3e344a158f8a
 
 notifications:
   email:
