@@ -34,6 +34,8 @@ install(){
 # INTERNAL USAGE
 clean(){
     log "Clean STARTED"
+    rm -r node_modules
+    rm -r typings
     cd lib/engine/backoffice/public/admin
     rm -r bower_components
     cd $DIR
