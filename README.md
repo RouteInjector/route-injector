@@ -1,6 +1,6 @@
 # Route Injector
 
-[![Build Status](https://travis-ci.org/RouteInjector/route-injector.svg?branch=master)](https://travis-ci.org/RouteInjector/route-injector)
+[![Build Status](https://travis-ci.org/RouteInjector/route-injector.svg?branch=master)](https://travis-ci.org/RouteInjector/route-injector) [![Code Climate](https://codeclimate.com/github/RouteInjector/route-injector/badges/gpa.svg)](https://codeclimate.com/github/RouteInjector/route-injector) [![Test Coverage](https://codeclimate.com/github/RouteInjector/route-injector/badges/coverage.svg)](https://codeclimate.com/github/RouteInjector/route-injector/coverage)
 
 Web framework to quick bootstrap CRUD applications for [node](http://nodejs.org/)
 
