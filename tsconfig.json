@@ -9,7 +9,7 @@
   },
   "exclude": [
     "node_modules",
-    "src/node_modules",
-    "src/engine/backoffice/public"
+    "lib/engine/backoffice/public",
+    "tests"
   ]
 }
