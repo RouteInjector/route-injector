@@ -68,6 +68,7 @@ release(){
     transpile
 #    version
     clean
+    clean_tests
     log "Release ENDED"
 }
 
@@ -97,6 +98,18 @@ test(){
             npm install
             npm link route-injector
             RI_ENV=test $DIR/node_modules/.bin/mocha --preserve-symlinks *
+            cd ..
+        fi
+    done
+    cd $DIR
+}
+
+clean_tests(){
+    cd tests
+    for D in *; do
+        if [ -d "${D}" ]; then
+            cd "${D}"
+            rm -rf node_modules
             cd ..
         fi
     done
