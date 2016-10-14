@@ -1,8 +1,0 @@
-{
-  "SEARCH": {
-    "DELETE": "Borrar",
-    "ADD_CRITERIA": "Añadir criterio de búsqueda",
-    "PLACEHOLDER": "Buscar en {{modelName}} por {{field}}",
-    "SEARCH": "Buscar"
-  }
-}

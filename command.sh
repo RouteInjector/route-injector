@@ -25,10 +25,6 @@ install(){
     log "Install STARTED"
     npm install
     check_exit
-    $(npm bin)/bower install --allow-root
-    check_exit
-    $(npm bin)/grunt dist
-    check_exit
     log "Install ENDED"
 }
 # INTERNAL USAGE
@@ -36,8 +32,6 @@ clean(){
     log "Clean STARTED"
     rm -r node_modules
     rm -r typings
-    cd lib/engine/backoffice/public/admin
-    rm -r bower_components
     cd $DIR
     log "Clean ENDED"
 }
@@ -121,7 +115,7 @@ help() {
   echo "-----------------------------------------------------------------------"
   echo "-                     Available commands                              -"
   echo "-----------------------------------------------------------------------"
-  echo "   > install - Resolve npm and bower dependencies"
+  echo "   > install - Resolve npm dependencies"
   echo "   > build - Install dependencies and transpile code"
   echo "   > release - Release a new version"
   echo "   > test - Run tests"

@@ -1,7 +1,0 @@
-{
-  "VERSION_DIALOG": {
-    "TITLE": "New update available",
-    "MSG": "There's a new update in the server, it's highly recommended to refresh this page to avoid unexpected errors",
-    "BUTTON": "Refresh"
-  }
-}

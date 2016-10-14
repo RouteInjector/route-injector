@@ -1,7 +1,7 @@
 /**
  * Created by gerard on 1/18/16.
  */
-///<reference path='../typings/index.d.ts'/>
+///<reference path='../../typings/index.d.ts'/>
 
 import fs = require('fs');
 import path = require('path');

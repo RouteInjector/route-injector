@@ -1,7 +1,0 @@
-<link rel="stylesheet" href="dist/css/codemirror/theme/monokai.css"/>
-<div class="form-group" ng-class="{'has-error': hasError()}">
-    <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
-    <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="$$value$$" ui-codemirror="{ onLoad : codemirrorLoaded }"></ui-codemirror>
-    <span class="help-block">{{ (hasError() && errorMessage(schemaError())) || form.description}}</span>
-</div>
-<script src="dist/extra/codemirror/javascript.js"></script>
