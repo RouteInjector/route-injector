@@ -27,8 +27,6 @@ install(){
     check_exit
     $(npm bin)/bower install --allow-root
     check_exit
-    $(npm bin)/grunt dist
-    check_exit
     log "Install ENDED"
 }
 # INTERNAL USAGE
