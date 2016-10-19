@@ -24,6 +24,7 @@ check_exit() {
 install(){
     log "Install STARTED"
     npm install
+    typings
     check_exit
     log "Install ENDED"
 }
@@ -68,7 +69,7 @@ release(){
 
 transpile(){
     log "Do the transpilation"
-    ./node_modules/.bin/typings install
+    typings
     check_exit
     ./node_modules/.bin/tsc
     # Return 0 to avoid failing because of warnings not solved
@@ -80,7 +81,21 @@ transpile(){
 #}
 
 typings(){
-    ./node_modules/.bin/typings install
+    $(npm bin)/typings install
+}
+
+transpile_pre_commit(){
+    files=`git status -s -uno|grep -v '^ '|awk '{print $2}'`
+
+    transpile
+
+    echo "$files" | while read a
+    do
+        if [ "${a##*.}" == "ts" ]; then
+            git add ${a//".ts"/".js"}
+            git add ${a//".ts"/".js.map"}
+        fi
+    done
 }
 
 test(){
