@@ -63,7 +63,7 @@
     "versiony": "*",
     "vhost": "*",
     "ri-swagger": "^2.0.0",
-    "ri-backoffice": "^2.0.0"
+    "ri-backoffice": "2.0.x"
   },
   "devDependencies": {
     "bower": "*",
