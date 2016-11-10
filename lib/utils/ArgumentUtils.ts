@@ -1,6 +1,8 @@
 /**
  * Created by gerard on 08/02/16.
  */
+
+/// <reference path='../../typings/index.d.ts'/>
 class ArgumentUtils {
     private static args = require('minimist')(process.argv.slice(2));
 

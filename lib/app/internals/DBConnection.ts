@@ -1,7 +1,8 @@
 /**
  * Created by gerard on 1/15/16.
  */
-/// <reference path='../../typings/index.d.ts'/>
+/// <reference path='../../../typings/index.d.ts'/>
+
 import Logger = require("./Logger");
 import Configurations = require("./Configurations");
 import mongoose = require("mongoose");

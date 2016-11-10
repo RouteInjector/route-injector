@@ -1,4 +1,5 @@
-///<reference path='../../typings/index.d.ts' />
+///<reference path='../../../typings/index.d.ts' />
+
 import Logger = require("./Logger");
 import FSUtils = require("../../utils/FSUtils");
 import _ = require("lodash");

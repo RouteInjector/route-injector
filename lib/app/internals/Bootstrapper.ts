@@ -1,8 +1,10 @@
 ///<reference path='../../../typings/index.d.ts'/>
+
 import {IRouteInjector} from "../interfaces/IRouteInjector";
 import Logger = require("./Logger");
 import Configurations = require("./Configurations");
 import ArgumentUtils = require("../../utils/ArgumentUtils");
+
 class Bootstrapper {
     static logger = Logger.getLogger();
 
@@ -27,4 +29,5 @@ class Bootstrapper {
         this.injector.config.bootstrap = null;
     }
 }
+
 export = Bootstrapper;

@@ -1,4 +1,4 @@
-/// <reference path='../typings/index.d.ts'/>
+/// <reference path='../../typings/index.d.ts'/>
 import Bootstrapper = require("./internals/Bootstrapper");
 'use strict';
 import AuthManager = require("./internals/AuthManager");

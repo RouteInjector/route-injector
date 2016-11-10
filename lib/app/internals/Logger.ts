@@ -1,7 +1,8 @@
 /**
  * Created by gerard on 1/20/16.
  */
-///<reference path='../../typings/index.d.ts' />
+///<reference path='../../../typings/index.d.ts' />
+
 import bunyan = require('bunyan');
 import PrettyStream = require("bunyan-prettystream");
 import FSUtils = require("../../utils/FSUtils");

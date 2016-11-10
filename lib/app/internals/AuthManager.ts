@@ -1,3 +1,5 @@
+///<reference path='../../../typings/index.d.ts'/>
+
 import PassportLocal = require("./auth/PassportLocal");
 import {IAuthConfig} from "./auth/IAuthConfig";
 import Configurations = require("./Configurations");

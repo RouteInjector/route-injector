@@ -1,4 +1,5 @@
-///<reference path='../../typings/index.d.ts'/>
+///<reference path='../../../typings/index.d.ts'/>
+
 import FSUtils = require("../../utils/FSUtils");
 'use strict';
 import {IMiddleware} from "../interfaces/IMiddleware";

@@ -1,3 +1,5 @@
+/// <reference path='../../typings/index.d.ts'/>
+
 import Configurations = require("../app/internals/Configurations");
 import FSUtils = require("./FSUtils");
 /**

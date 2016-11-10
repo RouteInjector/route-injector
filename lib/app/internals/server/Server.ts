@@ -1,7 +1,7 @@
 /**
  * Created by gerard on 1/21/16.
  */
-///<reference path='../../../typings/index.d.ts'/>
+///<reference path='../../../../typings/index.d.ts'/>
 import httpServer = require('http');
 import httpsServer = require('https');
 import fs=require("fs");

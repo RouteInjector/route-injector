@@ -1,4 +1,4 @@
-/// <reference path='../typings/index.d.ts'/>
+/// <reference path='../../typings/index.d.ts'/>
 import {Model} from "mongoose";
 import {Request} from "express";
 import ModelUtils = require("./ModelUtils");

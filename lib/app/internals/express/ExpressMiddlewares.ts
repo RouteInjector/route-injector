@@ -1,3 +1,5 @@
+///<reference path='../../../../typings/index.d.ts'/>
+
 import {Request} from "express";
 import {Response} from "express";
 import {Express} from "express";

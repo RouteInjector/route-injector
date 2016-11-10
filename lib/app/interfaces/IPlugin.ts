@@ -1,7 +1,7 @@
 /**
  * Created by gerard on 1/19/16.
  */
-///<reference path='../../typings/index.d.ts'/>
+///<reference path='../../../typings/index.d.ts'/>
 import {Schema} from "mongoose";
 import {IRouteInjector} from "./IRouteInjector";
 export interface IPlugin {

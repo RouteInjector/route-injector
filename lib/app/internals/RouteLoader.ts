@@ -1,4 +1,4 @@
-///<reference path='../../typings/index.d.ts'/>
+///<reference path='../../../typings/index.d.ts'/>
 'use strict';
 import Logger = require("./Logger");
 import RouteInjector = require("../RouteInjector");

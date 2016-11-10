@@ -1,7 +1,8 @@
 /**
  * Created by gerard on 1/18/16.
  */
-/// <reference path='../../typings/index.d.ts'/>
+/// <reference path='../../../typings/index.d.ts'/>
+
 import Logger = require("./Logger");
 import FSUtils = require("../../utils/FSUtils");
 import path = require('path');
