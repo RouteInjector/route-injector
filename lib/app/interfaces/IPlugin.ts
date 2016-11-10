@@ -4,6 +4,7 @@
 ///<reference path='../../../typings/index.d.ts'/>
 import {Schema} from "mongoose";
 import {IRouteInjector} from "./IRouteInjector";
+import Server = require("../internals/server/Server");
 export interface IPlugin {
     /**
      * This function gets called once the plugin is loaded in route injector
@@ -11,6 +12,12 @@ export interface IPlugin {
      * @param pluginUserConf
      */
     init(pluginUserConf:any):void;
+
+    /**
+     * If plugin implements this function, a Server instance will be passed in order to attach extra functionalities.
+     * @param server
+     */
+    attachServer(server:Server):void;
 
     /**
      * This function gets called on the modify schema stage of route injector. Plugins can modify schemas before this ones are compiled to mongoose models
@@ -49,6 +56,7 @@ export interface IPlugin {
      * This property gives an array of objects that represent statics. They must contain url and
      */
     statics:any[];
+
 }
 
 export interface IMetaPlugin {
