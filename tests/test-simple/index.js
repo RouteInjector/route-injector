@@ -1,6 +1,6 @@
 var request = require('supertest');
 
-describe('user', function () {
+describe('test-simple', function () {
     var injector;
     var userId;
 

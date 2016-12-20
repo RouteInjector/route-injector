@@ -12,7 +12,7 @@ var schema = new Schema({
     }
 );
 
-//Is used to enable refection in security middleware
+//Is used to enable reflection in security middleware
 schema.plugin(jsonform, {
     excludedPaths: ['_id', '__v'] //these paths are generally excluded
 });

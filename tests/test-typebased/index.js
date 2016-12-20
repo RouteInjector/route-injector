@@ -1,6 +1,6 @@
 var request = require('supertest');
 
-describe('user', function () {
+describe('test-typebased', function () {
     var injector;
     var userId, userId2, vehicleId;
 
