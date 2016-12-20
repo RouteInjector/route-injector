@@ -30,7 +30,7 @@ describe('user', function () {
                 .expect(200, {
                     niceName: {type: 'string', title: 'Nice Name'},
                     birth: {type: 'string', title: 'Birth', format: 'date'},
-                    phones: {type: 'array', items: {type: 'string', format: 'mixed'}},
+                    phones: {title: 'Phones', type: 'array', items: {type: 'string', format: 'mixed'}},
                     friend: {type: 'string', ref: 'User', title: 'Friend'}
                 }, done)
         });
@@ -53,7 +53,9 @@ describe('user', function () {
                     delete: true,
                     search: true,
                     export: true,
-                    import: true
+                    import: true,
+                    defaultSearch: {},
+                    hideMenu: false
                 }, done)
         });
     });
