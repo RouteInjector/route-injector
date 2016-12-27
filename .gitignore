@@ -11,3 +11,5 @@ typings
 **/typedoc/*
 
 *.log
+
+.DS_Store
