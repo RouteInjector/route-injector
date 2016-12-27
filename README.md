@@ -10,6 +10,10 @@ Web framework to quick bootstrap CRUD applications for [node](http://nodejs.org/
 $ npm install route-injector
 ```
 
+## Documentation
+
+Documentation can be found [here](https://routeinjector.github.io/docs-js/).
+
 ## Features
 
 * Focus on prototyping
