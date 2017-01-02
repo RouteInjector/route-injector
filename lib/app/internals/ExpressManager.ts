@@ -230,10 +230,23 @@ class ExpressManager {
     }
 
     /**
-     * Export Not Found and Generar Error Handler for Express
+     * Export Not Found and General Error Handler for Express
      */
     private errorHandlers(): void {
-        this.app.use(ExpressMiddlewares.notFoundHandler());
+        if(this.config.application.notFound == undefined) {
+            this.app.use(ExpressMiddlewares.notFoundHandler());
+        } else {
+            if(this.config.application.notFound == "disabled") {
+                // do nothing, so 404 can be intercepted in bin/www
+            } else if(this.config.application.notFound == "angular") {
+                // return index.html without redirect
+                // TODO
+            } else {
+                // make a redirect to the URL specified.
+                this.app.use(ExpressMiddlewares.redirectHandler("http://www.ondho.com"));
+            }
+        }
+
         this.app.use(ExpressMiddlewares.errorHandler());
     }
 

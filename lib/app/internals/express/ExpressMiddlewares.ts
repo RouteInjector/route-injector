@@ -46,6 +46,12 @@ export function notFoundHandler() {
     };
 }
 
+export function redirectHandler(url:String) {
+    return function (req, res, next) {
+        res.redirect(url);
+    };
+}
+
 export function errorHandler() {
     var logger = Logger.getLogger('Express Middlewares - Error Handler');
     return (err:any, req:Request, res:Response, next:Function) => {
