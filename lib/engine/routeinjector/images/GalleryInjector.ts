@@ -42,10 +42,10 @@ class GalleryInjector {
     private handleGetImagesList() {
         this.routeInjector.app.get(this.galleryEndpoint + "/:path(*)", (req, res) => {
             var path = FSUtils.join(this.galleryFilepath, req.params.path);
-            var expression = "**/*";
+            var expression = "*/";
             var dirprefix = "";
             GalleryInjector.logger.debug("[ GalleryInjector ] -> HandleGetImagesList ->",path);
-            var files = FSUtils.getAllFilesRecursivelyByType(path, expression, dirprefix);
+            var files = FSUtils.getClassifiedFileMap(path);
             res.json(files);
             res.end();
         });

@@ -6,6 +6,7 @@
 import fs = require('fs');
 import path = require('path');
 import glob = require('glob');
+import mime = require('mime');
 
 class FSUtils {
 
@@ -14,7 +15,7 @@ class FSUtils {
      * @param srcpath
      * @returns {any}
      */
-    static getDirectories(srcpath):string[] {
+    static getDirectories(srcpath): string[] {
         if (fs.existsSync(srcpath)) {
             return fs.readdirSync(srcpath).filter(function (file) {
                 return fs.statSync(path.join(srcpath, file)).isDirectory();
@@ -39,7 +40,7 @@ class FSUtils {
      * @param path
      * @returns {boolean}
      */
-    static exists(path):boolean {
+    static exists(path): boolean {
         return fs.existsSync(path);
     }
 
@@ -64,17 +65,53 @@ class FSUtils {
      * @param srcpath
      * @returns {T[]|string[]}
      */
-    static getFiles(srcpath):string[] {
+    static getFiles(srcpath): string[] {
         return fs.readdirSync(srcpath).filter(function (file) {
             return fs.statSync(path.join(srcpath, file)).isFile();
         });
     }
 
-    static getAllFilesRecursivelyByType(path, expression, dirPrefix){
+    static getAllFilesRecursivelyByType(path, expression, dirPrefix) {
         var files = glob.sync(FSUtils.join(path, expression));
-        return files.map(function(file){
-            return FSUtils.join(dirPrefix, FSUtils.relative(path, file)).replace(/\\/g,'/');
+        return files.map(function (file) {
+            return FSUtils.join(dirPrefix, FSUtils.relative(path, file)).replace(/\\/g, '/');
         });
+    }
+
+    static getClassifiedFileMap(path) {
+        var filemap = {
+            directories: []
+        };
+        fs.readdirSync(path).forEach(function (file) {
+            var p = FSUtils.join(path, file);
+            if (fs.statSync(p).isDirectory()) {
+                filemap["directories"].push(file);
+            } else {
+                if (!filemap[FSUtils.classifyFile(p)])
+                    filemap[FSUtils.classifyFile(p)] = [];
+                filemap[FSUtils.classifyFile(p)].push(file);
+            }
+        });
+        return filemap;
+    }
+
+    private static getFileType(path): string {
+        return mime.lookup(path);
+    }
+
+    private static classifyFile(file): string {
+        var type = FSUtils.getFileType(file);
+        var primitiveType = type.split("/")[0];
+        switch (primitiveType) {
+            case "image":
+                break;
+            case "video":
+                break;
+            default:
+                primitiveType = type;
+                break;
+        }
+        return primitiveType;
     }
 
     /**
@@ -86,7 +123,7 @@ class FSUtils {
     /**
      * Load a file from existing path
      */
-    static loadFile(srcpath:string):any {
+    static loadFile(srcpath: string): any {
         try {
             return require(srcpath);
         } catch (e) {
@@ -98,7 +135,7 @@ class FSUtils {
      * Create a directory
      * @type {string}
      */
-    static createDirectory(path){
+    static createDirectory(path) {
         fs.mkdirSync(path);
     }
 }
