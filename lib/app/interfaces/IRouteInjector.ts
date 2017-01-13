@@ -4,10 +4,17 @@
 ///<reference path='../../../typings/index.d.ts'/>
 import {Schema} from "mongoose";
 import Configurations = require("../internals/Configurations");
+import {IRouter} from "express";
 export interface IRouteInjector {
     start(cb:()=>void);
     log:any;
     loadPlugin(pluginName:string, config:Object);
     config:Configurations;
     mongoose:any;
+}
+
+export interface IInternalRouteInjector extends IRouteInjector{
+    plugins();
+    app:IRouter;
+    internals:any;
 }

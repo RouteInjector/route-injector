@@ -93,5 +93,13 @@ class FSUtils {
             return undefined;
         }
     }
+
+    /**
+     * Create a directory
+     * @type {string}
+     */
+    static createDirectory(path){
+        fs.mkdirSync(path);
+    }
 }
 export = FSUtils;
