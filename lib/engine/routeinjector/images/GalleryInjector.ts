@@ -60,18 +60,26 @@ class GalleryInjector {
 
     private handlePostImage() {
         this.routeInjector.app.post(this.galleryEndpoint + "/:path(*)", this.upload.array("images"), (req, res, next) => {
-            res.json(req.files);
+            let files = req.files;
+            let i = 0;
+            let path = req.param("path", "");
+            for (i; i < files.length; i++) {
+                files[i] = this.galleryEndpoint + "/" + path + "/" + files[i].originalname;
+            }
+            res.statusCode = 201;
+            res.json(files);
+            return res.end();
         });
     }
 
     private handleGetImage() {
         let express = this.routeInjector.internals.express;
-        this.routeInjector.app.use(this.galleryEndpoint, express.static(this.galleryFilepath))
+        this.routeInjector.app.use(this.galleryEndpoint, express.static(this.galleryFilepath));
     }
 
     private handleDeleteImage() {
         this.routeInjector.app.delete(this.galleryEndpoint + "/:path(*)", this.fileExistsMiddleware, (req, res, next) => {
-            FSUtils.remove(req.filepath)
+            FSUtils.remove(req.filepath);
             res.statusCode = 200;
             res.json({
                 message: req.filepath + " has been removed"
