@@ -15,6 +15,13 @@ class GalleryInjector {
     private galleryEndpoint: string;
     private galleryFilepath: string;
 
+    private listDirectoryRoles: string[];
+    private postImageRoles: string[];
+    private deleteImageRoles: string[];
+
+    private checkRole;
+    private getUserIfExists;
+
     private upload;
 
     constructor(routeInjector: IInternalRouteInjector) {
@@ -32,25 +39,38 @@ class GalleryInjector {
             return;
         }
         GalleryInjector.logger.debug("GalleryConfig found. Injecting.");
-        this.galleryEndpoint = this.galleryConfig.endpoint;
-        this.galleryFilepath = this.galleryConfig.filepath;
-        this.createMulterUpload();
-        this.createFilepathIfNotExist();
+        this.loadConfiguration();
+        this.loadSecurityModule();
+        this.createGalleryFilepathIfRequired();
+        this.setupMulterMiddleware();
         this.handleGetImage();
         this.handleGetImagesList();
         this.handlePostImage();
         this.handleDeleteImage();
     }
 
-    private createFilepathIfNotExist() {
+    private createGalleryFilepathIfRequired() {
         if (FSUtils.exists(this.galleryFilepath))
             return;
         GalleryInjector.logger.debug("[ GalleryInjector ] -> Creating filepath", this.galleryFilepath);
         FSUtils.createDirectory(this.galleryFilepath)
     }
 
+    private loadConfiguration() {
+        this.galleryEndpoint = this.galleryConfig.endpoint;
+        this.galleryFilepath = this.galleryConfig.filepath;
+        this.listDirectoryRoles = this.galleryConfig.listDirectory;
+        this.postImageRoles = this.galleryConfig.postImage;
+        this.deleteImageRoles = this.galleryConfig.deleteImage;
+    }
+
+    private loadSecurityModule() {
+        this.checkRole = this.routeInjector.security.checkRole;
+        this.getUserIfExists = this.routeInjector.security.getUserIfExists;
+    }
+
     private handleGetImagesList() {
-        this.routeInjector.app.get(this.galleryEndpoint + "/:path(*)", this.fileExistsMiddleware, (req, res, next) => {
+        this.routeInjector.app.get(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.listDirectoryRoles).middleware, this.fileExistsMiddleware, (req, res, next) => {
             let path = req.filepath;
             let files = FSUtils.getClassifiedFileMap(path);
             res.json(files);
@@ -59,7 +79,7 @@ class GalleryInjector {
     }
 
     private handlePostImage() {
-        this.routeInjector.app.post(this.galleryEndpoint + "/:path(*)", this.upload.array("images"), (req, res, next) => {
+        this.routeInjector.app.post(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.postImageRoles).middleware, this.upload.array("images"), (req, res, next) => {
             let files = req.files;
             let i = 0;
             let path = req.param("path", "");
@@ -79,7 +99,7 @@ class GalleryInjector {
     }
 
     private handleDeleteImage() {
-        this.routeInjector.app.delete(this.galleryEndpoint + "/:path(*)", this.fileExistsMiddleware, (req, res, next) => {
+        this.routeInjector.app.delete(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.deleteImageRoles).middleware, this.fileExistsMiddleware, (req, res, next) => {
             FSUtils.remove(req.filepath);
             res.statusCode = 200;
             res.json({
@@ -99,11 +119,11 @@ class GalleryInjector {
         return next();
     };
 
-    private createMulterUpload() {
+    private setupMulterMiddleware() {
         let storage = multer.diskStorage({
             destination: (req, file, cb) => {
                 let reqPathParam = (req as Request).param("path", ".");
-                let path = FSUtils.join(this.galleryFilepath, reqPathParam)
+                let path = FSUtils.join(this.galleryFilepath, reqPathParam);
                 if (!FSUtils.exists(path))
                     FSUtils.createDirectory(path);
                 cb(null, path);
@@ -116,8 +136,6 @@ class GalleryInjector {
             storage: storage
         });
     }
-
-
 }
 
 export = GalleryInjector;

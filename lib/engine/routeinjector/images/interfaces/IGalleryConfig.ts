@@ -5,4 +5,7 @@
 interface IGalleryConfig {
     endpoint: string
     filepath: string
+    listDirectory: string[]
+    postImage: string[]
+    deleteImage: string[]
 }
