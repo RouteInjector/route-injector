@@ -18,7 +18,8 @@ export function expressSetup(app:Express, viewsPath:string, viewEngine:string) {
     app.use(logger('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: false}));
-    app.use(multer());
+    // TODO: multipart has been broken. Rework with new multer
+    // app.use(multer());
     app.use(cookieParser());
 
 }

@@ -7,6 +7,7 @@ import fs = require('fs');
 import path = require('path');
 import glob = require('glob');
 import mime = require('mime');
+import mkdirp = require('mkdirp');
 
 class FSUtils {
 
@@ -136,7 +137,22 @@ class FSUtils {
      * @type {string}
      */
     static createDirectory(path) {
-        fs.mkdirSync(path);
+        mkdirp.sync(path);
+    }
+
+    /**
+     * Remove a file or directory
+     * @param path
+     */
+    static remove(path) {
+        fs.unlinkSync(path);
+    }
+
+    /**
+     * Check if path is a file
+     */
+    static isFile(path) {
+        return fs.statSync(path).isFile();
     }
 }
 export = FSUtils;

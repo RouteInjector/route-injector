@@ -3,6 +3,6 @@
  */
 
 interface IGalleryConfig {
-    endpoint: String
-    filepath: String
+    endpoint: string
+    filepath: string
 }

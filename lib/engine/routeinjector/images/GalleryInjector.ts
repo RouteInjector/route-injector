@@ -1,6 +1,9 @@
 import {IInternalRouteInjector} from "../../../app/interfaces/IRouteInjector";
 import Logger = require("../../../app/internals/Logger");
 import FSUtils = require("../../../utils/FSUtils");
+import NotFound = require("../../../responses/NotFound");
+import multer = require("multer");
+import {Request} from "express";
 
 
 class GalleryInjector {
@@ -9,12 +12,18 @@ class GalleryInjector {
     private routeInjector: IInternalRouteInjector;
     private galleryConfig: IGalleryConfig;
 
-    private galleryEndpoint: String;
-    private galleryFilepath: String;
+    private galleryEndpoint: string;
+    private galleryFilepath: string;
+
+    private upload;
 
     constructor(routeInjector: IInternalRouteInjector) {
         this.routeInjector = routeInjector;
         this.galleryConfig = this.routeInjector.config.env.images && this.routeInjector.config.env.images.gallery || undefined;
+    }
+
+    public static create(routeInjector: IInternalRouteInjector): GalleryInjector {
+        return new GalleryInjector(routeInjector);
     }
 
     public inject() {
@@ -25,6 +34,9 @@ class GalleryInjector {
         GalleryInjector.logger.debug("GalleryConfig found. Injecting.");
         this.galleryEndpoint = this.galleryConfig.endpoint;
         this.galleryFilepath = this.galleryConfig.filepath;
+        this.upload = multer({
+            storage: this.configureStorage()
+        });
         this.createFilepathIfNotExist();
         this.handleGetImage();
         this.handleGetImagesList();
@@ -40,37 +52,57 @@ class GalleryInjector {
     }
 
     private handleGetImagesList() {
-        this.routeInjector.app.get(this.galleryEndpoint + "/:path(*)", (req, res) => {
-            var path = FSUtils.join(this.galleryFilepath, req.params.path);
-            var expression = "*/";
-            var dirprefix = "";
-            GalleryInjector.logger.debug("[ GalleryInjector ] -> HandleGetImagesList ->",path);
-            var files = FSUtils.getClassifiedFileMap(path);
+        this.routeInjector.app.get(this.galleryEndpoint + "/:path(*)", this.fileExistsMiddleware, (req, res, next) => {
+            let path = req.filepath;
+            let files = FSUtils.getClassifiedFileMap(path);
             res.json(files);
             res.end();
         });
     }
 
     private handlePostImage() {
-        this.routeInjector.app.post(this.galleryEndpoint, (req, res) => {
-
+        this.routeInjector.app.post(this.galleryEndpoint + "/:path(*)", this.upload.array("images"), (req, res, next) => {
+            res.json(req.files);
         });
     }
 
     private handleGetImage() {
-        var express = this.routeInjector.internals.express;
+        let express = this.routeInjector.internals.express;
         this.routeInjector.app.use(this.galleryEndpoint, express.static(this.galleryFilepath))
     }
 
     private handleDeleteImage() {
-        this.routeInjector.app.delete(this.galleryEndpoint, (req, res) => {
-
+        this.routeInjector.app.delete(this.galleryEndpoint + "/:path(*)", this.fileExistsMiddleware, (req, res, next) => {
+            let path = req.filepath;
         });
     }
 
-    public static create(routeInjector: IInternalRouteInjector): GalleryInjector {
-        return new GalleryInjector(routeInjector);
+    private fileExistsMiddleware = (req, res, next) => {
+        let reqPath = req.params.path;
+        let path = FSUtils.join(this.galleryFilepath, reqPath);
+        if (!FSUtils.exists(path)) {
+            return next(new NotFound(reqPath + " not found"));
+        }
+        req.filepath = path;
+        return next();
+    };
+
+    private configureStorage() {
+        return multer.diskStorage({
+            destination: (req, file, cb) => {
+                let reqPathParam = (req as Request).param("path", ".");
+                let path = FSUtils.join(this.galleryFilepath, reqPathParam)
+                if (!FSUtils.exists(path))
+                    FSUtils.createDirectory(path);
+                cb(null, path);
+            },
+            filename: (req, file, cb) => {
+                cb(null, file.originalname);
+            }
+        });
     }
+
+
 }
 
 export = GalleryInjector;
