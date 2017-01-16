@@ -63,8 +63,9 @@ class GalleryInjector {
             let files = req.files;
             let i = 0;
             let path = req.param("path", "");
+            let partialPath = this.galleryEndpoint + "/" + path + "/";
             for (i; i < files.length; i++) {
-                files[i] = this.galleryEndpoint + "/" + path + "/" + files[i].originalname;
+                files[i] = partialPath + files[i].originalname;
             }
             res.statusCode = 201;
             res.json(files);
