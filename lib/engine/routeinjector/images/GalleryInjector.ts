@@ -34,9 +34,7 @@ class GalleryInjector {
         GalleryInjector.logger.debug("GalleryConfig found. Injecting.");
         this.galleryEndpoint = this.galleryConfig.endpoint;
         this.galleryFilepath = this.galleryConfig.filepath;
-        this.upload = multer({
-            storage: this.configureStorage()
-        });
+        this.createMulterUpload();
         this.createFilepathIfNotExist();
         this.handleGetImage();
         this.handleGetImagesList();
@@ -73,7 +71,12 @@ class GalleryInjector {
 
     private handleDeleteImage() {
         this.routeInjector.app.delete(this.galleryEndpoint + "/:path(*)", this.fileExistsMiddleware, (req, res, next) => {
-            let path = req.filepath;
+            FSUtils.remove(req.filepath)
+            res.statusCode = 200;
+            res.json({
+                message: req.filepath + " has been removed"
+            });
+            return res.end();
         });
     }
 
@@ -87,8 +90,8 @@ class GalleryInjector {
         return next();
     };
 
-    private configureStorage() {
-        return multer.diskStorage({
+    private createMulterUpload() {
+        let storage = multer.diskStorage({
             destination: (req, file, cb) => {
                 let reqPathParam = (req as Request).param("path", ".");
                 let path = FSUtils.join(this.galleryFilepath, reqPathParam)
@@ -99,6 +102,9 @@ class GalleryInjector {
             filename: (req, file, cb) => {
                 cb(null, file.originalname);
             }
+        });
+        this.upload = multer({
+            storage: storage
         });
     }
 
