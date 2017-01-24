@@ -79,7 +79,7 @@ class GalleryInjector {
     }
 
     private handlePostImage() {
-        this.routeInjector.app.post(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.postImageRoles).middleware, this.upload.array("images"), (req, res, next) => {
+        this.routeInjector.app.post(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.postImageRoles).middleware, this.upload.array("file[]"), (req, res, next) => {
             let files = req.files;
             let i = 0;
             let path = req.param("path", "");
