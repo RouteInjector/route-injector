@@ -79,18 +79,21 @@ class GalleryInjector {
     }
 
     private handlePostImage() {
-        this.routeInjector.app.post(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.postImageRoles).middleware, this.upload.array("file[]"), (req, res, next) => {
-            let files = req.files;
-            let i = 0;
-            let path = req.param("path", "");
-            let partialPath = this.galleryEndpoint + "/" + path + "/";
-            for (i; i < files.length; i++) {
-                files[i] = partialPath + files[i].originalname;
-            }
-            res.statusCode = 201;
-            res.json(files);
-            return res.end();
-        });
+        this.routeInjector.app.post(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware,
+            this.checkRole(this.postImageRoles).middleware, this.upload.array("file[]"), (req, res, next) => {
+                let files = req.files;
+                let path = req.param("path", "");
+                if (path !== "") {
+                    FSUtils.createDirectory(FSUtils.join(this.galleryFilepath, path));
+                }
+                let partialPath = this.galleryEndpoint + "/" + path + "/";
+                for (let i = 0; i < files.length; i++) {
+                    files[i] = partialPath + files[i].originalname;
+                }
+                res.statusCode = 201;
+                res.json(files);
+                return res.end();
+            });
     }
 
     private handleGetImage() {
