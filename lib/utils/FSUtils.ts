@@ -80,11 +80,11 @@ class FSUtils {
     }
 
     static getClassifiedFileMap(path) {
-        var filemap = {
+        let filemap = {
             directories: []
         };
         fs.readdirSync(path).forEach(function (file) {
-            var p = FSUtils.join(path, file);
+            let p = FSUtils.join(path, file);
             if (fs.statSync(p).isDirectory()) {
                 filemap["directories"].push(file);
             } else {
@@ -101,15 +101,15 @@ class FSUtils {
     }
 
     private static classifyFile(file): string {
-        var type = FSUtils.getFileType(file);
-        var primitiveType = type.split("/")[0];
+        let type = FSUtils.getFileType(file);
+        let primitiveType = type.split("/")[0];
         switch (primitiveType) {
             case "image":
                 break;
             case "video":
                 break;
             default:
-                primitiveType = type;
+                primitiveType = "file";
                 break;
         }
         return primitiveType;
@@ -145,7 +145,14 @@ class FSUtils {
      * @param path
      */
     static remove(path) {
-        fs.unlinkSync(path);
+        if (fs.statSync(path).isDirectory()) {
+            let files = fs.readdirSync(path);
+            if (files.length == 0) {
+                fs.rmdir(path);
+            }
+        } else {
+            fs.unlinkSync(path);
+        }
     }
 
     /**
