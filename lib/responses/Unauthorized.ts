@@ -5,7 +5,7 @@
 import RiResponse = require("./Response");
 class Unauthorized extends RiResponse {
 
-    constructor(msg:string) {
+    constructor(msg: string) {
         super("Unauthorized", msg);
     }
 

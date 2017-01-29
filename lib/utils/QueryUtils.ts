@@ -3,21 +3,21 @@ import {Model} from "mongoose";
 import {Request} from "express";
 import ModelUtils = require("./ModelUtils");
 import OperationType = require("./OperationType");
-import mongoose = require('mongoose');
-var utils = require('../engine/routeinjector/utils');
+import mongoose = require("mongoose");
+let utils = require("../engine/routeinjector/utils");
 
 class QueryUtils {
 
     //TODO: Add population key if present
-    public static findOne(operation:OperationType, model:Model, req:Request, cb:(err, doc)=>void) {
-        var query = QueryUtils.getQueryGivenModelAndRequest(operation, model, req);
-        var projection = QueryUtils.getProjection(operation, model, req);
+    public static findOne(operation: OperationType, model: Model, req: Request, cb: (err, doc) => void) {
+        let query = QueryUtils.getQueryGivenModelAndRequest(operation, model, req);
+        let projection = QueryUtils.getProjection(operation, model, req);
         QueryUtils.internalFindOne(model, query, projection, cb);
     };
 
-    public static findOneWithValue(operation:OperationType, model:model, req:Req, value:string, cb:(err, doc)=>void) {
-        var query = QueryUtils.getQueryGivenModelValueAndRequest(operation, model, req, value);
-        var projection = QueryUtils.getProjection(operation, model, req);
+    public static findOneWithValue(operation: OperationType, model: model, req: Req, value: string, cb: (err, doc) => void) {
+        let query = QueryUtils.getQueryGivenModelValueAndRequest(operation, model, req, value);
+        let projection = QueryUtils.getProjection(operation, model, req);
         console.log(query, projection);
         QueryUtils.internalFindOne(model, query, projection, cb);
     }
@@ -27,7 +27,7 @@ class QueryUtils {
      * @param model
      * @param cb
      */
-    public static count(model:Model, cb:(err:count)=>void) {
+    public static count(model: Model, cb: (err: count) => void) {
         QueryUtils.queriedCount(model, {}, cb);
     }
 
@@ -37,7 +37,7 @@ class QueryUtils {
      * @param query
      * @param cb
      */
-    public static queriedCount(model:Model, query:any, cb:(err:count)=>void) {
+    public static queriedCount(model: Model, query: any, cb: (err: count) => void) {
         model.count(query, cb);
     }
 
@@ -48,12 +48,12 @@ class QueryUtils {
      * @param req
      * @returns {{}}
      */
-    private static getQueryGivenModelAndRequest(operation:OperationType, model:Model, req:Request) {
-        var gConfig = model.injector();
-        var config = utils.getConfigByProfile(gConfig[operation], req);
+    private static getQueryGivenModelAndRequest(operation: OperationType, model: Model, req: Request) {
+        let gConfig = model.injector();
+        let config = utils.getConfigByProfile(gConfig[operation], req);
 
-        var query = {};
-        for (var i in config.mongo.query) {
+        let query = {};
+        for (let i in config.mongo.query) {
             //COPY the object
             query[i] = config.mongo.query[i];
         }
@@ -61,7 +61,7 @@ class QueryUtils {
         query[gConfig.id] = req.params[gConfig.id];
 
         //Shard key insertion if shard is enabled
-        if (gConfig.shard && gConfig.shard.shardKey && req.query[gConfig.shard.shardKey] != undefined) {
+        if (gConfig.shard && gConfig.shard.shardKey && req.query[gConfig.shard.shardKey] !== undefined) {
             query[gConfig.shard.shardKey] = req.query[gConfig.shard.shardKey];
         }
         return query;
@@ -75,12 +75,12 @@ class QueryUtils {
      * @param field
      * @param value
      */
-    private static getQueryGivenModelValueAndRequest(operation:OperationType, model:Model, req:Request, value:string) {
-        var gConfig = model.injector();
-        var config = utils.getConfigByProfile(gConfig[operation], req);
+    private static getQueryGivenModelValueAndRequest(operation: OperationType, model: Model, req: Request, value: string) {
+        let gConfig = model.injector();
+        let config = utils.getConfigByProfile(gConfig[operation], req);
 
-        var query = {};
-        for (var i in config.mongo.query) {
+        let query = {};
+        for (let i in config.mongo.query) {
             //COPY the object
             query[i] = config.mongo.query[i];
         }
@@ -88,19 +88,19 @@ class QueryUtils {
         query[gConfig.id] = value.toString();
 
         //Shard key insertion if shard is enabled
-        if (gConfig.shard && gConfig.shard.shardKey && req.query[gConfig.shard.shardKey] != undefined) {
+        if (gConfig.shard && gConfig.shard.shardKey && req.query[gConfig.shard.shardKey] !== undefined) {
             query[gConfig.shard.shardKey] = req.query[gConfig.shard.shardKey];
         }
         return query;
     }
 
-    private static getProjection(operation:OperationType, model:Model, req:Request) {
-        var gConfig = model.injector();
-        var config = utils.getConfigByProfile(gConfig[operation], req);
+    private static getProjection(operation: OperationType, model: Model, req: Request) {
+        let gConfig = model.injector();
+        let config = utils.getConfigByProfile(gConfig[operation], req);
         return config.mongo.projection;
     }
 
-    private static internalFindOne(model, query, projection, cb:Function) {
+    private static internalFindOne(model, query, projection, cb: Function) {
         model.findOne(query, projection, cb);
     }
 

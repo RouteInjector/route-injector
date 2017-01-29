@@ -3,9 +3,9 @@
  */
 ///<reference path='../../typings/index.d.ts'/>
 
-import fs = require('fs');
-import path = require('path');
-import glob = require('glob');
+import fs = require("fs");
+import path = require("path");
+import glob = require("glob");
 
 class FSUtils {
 
@@ -14,7 +14,7 @@ class FSUtils {
      * @param srcpath
      * @returns {any}
      */
-    static getDirectories(srcpath):string[] {
+    static getDirectories(srcpath): string[] {
         if (fs.existsSync(srcpath)) {
             return fs.readdirSync(srcpath).filter(function (file) {
                 return fs.statSync(path.join(srcpath, file)).isDirectory();
@@ -39,7 +39,7 @@ class FSUtils {
      * @param path
      * @returns {boolean}
      */
-    static exists(path):boolean {
+    static exists(path): boolean {
         return fs.existsSync(path);
     }
 
@@ -64,16 +64,16 @@ class FSUtils {
      * @param srcpath
      * @returns {T[]|string[]}
      */
-    static getFiles(srcpath):string[] {
+    static getFiles(srcpath): string[] {
         return fs.readdirSync(srcpath).filter(function (file) {
             return fs.statSync(path.join(srcpath, file)).isFile();
         });
     }
 
-    static getAllFilesRecursivelyByType(path, expression, dirPrefix){
-        var files = glob.sync(FSUtils.join(path, expression));
+    static getAllFilesRecursivelyByType(path, expression, dirPrefix) {
+        let files = glob.sync(FSUtils.join(path, expression));
         return files.map(function(file){
-            return FSUtils.join(dirPrefix, FSUtils.relative(path, file)).replace(/\\/g,'/');
+            return FSUtils.join(dirPrefix, FSUtils.relative(path, file)).replace(/\\/g, "/");
         });
     }
 
@@ -86,7 +86,7 @@ class FSUtils {
     /**
      * Load a file from existing path
      */
-    static loadFile(srcpath:string):any {
+    static loadFile(srcpath: string): any {
         try {
             return require(srcpath);
         } catch (e) {
