@@ -1,6 +1,6 @@
 /// <reference path='../../typings/index.d.ts'/>
 import Bootstrapper = require("./internals/Bootstrapper");
-'use strict';
+"use strict";
 import AuthManager = require("./internals/AuthManager");
 import DBConnection = require("./internals/DBConnection");
 import ModelsLoader = require("./internals/ModelsLoader");
@@ -9,7 +9,7 @@ import ExpressManager = require("./internals/ExpressManager");
 import MiddlewareRegistry = require("./internals/MiddlewareRegistry");
 import {Mongoose} from "mongoose";
 import Configurations = require("./internals/Configurations");
-import Logger = require('./internals/Logger');
+import Logger = require("./internals/Logger");
 import express = require("express-session");
 import PageLoader = require("./internals/PageLoader");
 
@@ -17,14 +17,14 @@ class RouteInjector {
     static logger = Logger.getLogger();
     public version = require("../../package.json").version;
 
-    private configurations:Configurations;
-    private pluginRegistry:PluginRegistry;
-    private dbConnection:DBConnection;
-    private modelsLoader:ModelsLoader;
-    private expressManager:ExpressManager;
-    private authManager:AuthManager;
-    private pageLoader:PageLoader;
-    private bootstrapper:Bootstrapper;
+    private configurations: Configurations;
+    private pluginRegistry: PluginRegistry;
+    private dbConnection: DBConnection;
+    private modelsLoader: ModelsLoader;
+    private expressManager: ExpressManager;
+    private authManager: AuthManager;
+    private pageLoader: PageLoader;
+    private bootstrapper: Bootstrapper;
     //private middlewareRegistry:MiddlewareRegistry;
 
     constructor() {
@@ -33,9 +33,9 @@ class RouteInjector {
         this.pluginRegistry = PluginRegistry.create(this.configurations);
     }
 
-    public start(callback:()=>void):void {
+    public start(callback: () => void): void {
         this.setupDependencies();
-        this.dbConnection.connect(()=> {
+        this.dbConnection.connect(() => {
             this.modelsLoader.loadModels();
             this.authManager.loadAuth();
             this.pluginRegistry.onAuthLoaded();
@@ -43,14 +43,14 @@ class RouteInjector {
             this.expressManager.buildServer(this);
             this.bootstrapper.bootstrap();
             this.globalize();
-            this.expressManager.bind(()=> {
+            this.expressManager.bind(() => {
                 return callback();
             });
         });
     }
 
-    public loadPlugin(pluginName:string, config:any) {
-        RouteInjector.logger.debug('Plugin %s is being loaded', pluginName);
+    public loadPlugin(pluginName: string, config: any) {
+        RouteInjector.logger.debug("Plugin %s is being loaded", pluginName);
         this.pluginRegistry.addPlugin(pluginName, config);
     }
 
@@ -67,11 +67,12 @@ class RouteInjector {
         RouteInjector.logger.info(" |   |   |  \\   |  \\  ___/\\  \\___|  | (  <_> )  | \\/  ");
         RouteInjector.logger.info(" |___|___|  /\\__|  |\\___  >\\___  >__|  \\____/|__|     ");
         RouteInjector.logger.info("          \\/\\______|    \\/     \\/                     ");
-        RouteInjector.logger.info('\n');
-        RouteInjector.logger.info('RouteInjector version: %s', this.version);
+        RouteInjector.logger.info("
+");
+        RouteInjector.logger.info("RouteInjector version: %s", this.version);
     }
 
-    private setupDependencies():void {
+    private setupDependencies(): void {
         this.dbConnection = DBConnection.create(this.configurations);
         this.pageLoader = PageLoader.create(this.configurations, this.pluginRegistry);
         this.expressManager = ExpressManager.create(this.configurations, this.pluginRegistry, this.pageLoader);
@@ -87,11 +88,11 @@ class RouteInjector {
     get internals() {
         return {
             express: this.expressManager.express
-        }
+        };
     }
 
     get app() {
-        return this.expressManager.app
+        return this.expressManager.app;
     }
 
     get mongoose() {
@@ -125,43 +126,43 @@ class RouteInjector {
     public cache = {middlewares: {}};
 
     private globalize() {
-        RouteInjector.logger.info('Make Globals:');
+        RouteInjector.logger.info("Make Globals:");
         if (this.config.globals.logger) {
-            RouteInjector.logger.info('\t log');
-            global['log'] = this.log;
+            RouteInjector.logger.info("	 log");
+            global["log"] = this.log;
         }
 
         if (this.config.globals.express) {
-            RouteInjector.logger.info('\t internals -> express');
-            global['express'] = this.internals.express;
+            RouteInjector.logger.info("	 internals -> express");
+            global["express"] = this.internals.express;
         }
 
         if (this.config.globals.app) {
-            RouteInjector.logger.info('\t app');
-            global['app'] = this.app;
+            RouteInjector.logger.info("	 app");
+            global["app"] = this.app;
         }
 
         if (this.config.globals.mongoose) {
-            RouteInjector.logger.info('\t mongoose');
-            global['mongoose'] = this.mongoose;
+            RouteInjector.logger.info("	 mongoose");
+            global["mongoose"] = this.mongoose;
         }
 
         if (this.config.globals.env) {
-            RouteInjector.logger.info('\t env');
-            global['env'] = this.config.env
+            RouteInjector.logger.info("	 env");
+            global["env"] = this.config.env;
         }
 
         if (this.config.globals.models) {
-            RouteInjector.logger.info('\t models');
+            RouteInjector.logger.info("	 models");
             this.modelsLoader.forEachModel(function (Model) {
-                RouteInjector.logger.info('\t\t ', Model.modelName);
+                RouteInjector.logger.info("		 ", Model.modelName);
                 global[Model.modelName] = Model;
             });
         }
 
         if (this.config.globals.security) {
-            RouteInjector.logger.info('\t security');
-            global['security'] = this.security;
+            RouteInjector.logger.info("	 security");
+            global["security"] = this.security;
         }
     }
 
