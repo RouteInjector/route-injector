@@ -57,7 +57,7 @@
     "path": "*",
     "q": "*",
     "request": "*",
-    "ri-backoffice": "2.0.x",
+    "ri-backoffice": "2.1.x",
     "ri-swagger": "^2.0.0",
     "serve-favicon": "~2.1.3",
     "statusCode": "http://devel200.upc.edu:1234/package/statusCode/latest",
