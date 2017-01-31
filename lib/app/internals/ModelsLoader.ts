@@ -10,18 +10,18 @@ import {Model} from "mongoose";
 
 class ModelsLoader {
     private static logger = Logger.getLogger();
-    private config:Configurations;
+    private config: Configurations;
     private pluginRegistry;
 
-    private _models:any = {};
+    private _models: any = {};
 
-    constructor(config:Configurations, pluginRegistry:PluginRegistry) {
+    constructor(config: Configurations, pluginRegistry: PluginRegistry) {
         ModelsLoader.logger.trace("Creating ModelsLoader instance");
         this.config = config;
         this.pluginRegistry = pluginRegistry;
     }
 
-    public static create(config:Configurations, pluginRegistry:PluginRegistry) {
+    public static create(config: Configurations, pluginRegistry: PluginRegistry) {
         return new ModelsLoader(config, pluginRegistry);
     }
 
@@ -41,8 +41,8 @@ class ModelsLoader {
      */
     public loadPluginSchemas() {
         ModelsLoader.logger.debug("Loading Plugin Schemas");
-        var plugins:string[] = this.pluginRegistry.getPluginNames();
-        plugins.forEach((plugin)=> {
+        var plugins: string[] = this.pluginRegistry.getPluginNames();
+        plugins.forEach((plugin) => {
             var pluginDir = FSUtils.getModulePath(plugin);
             var pluginModelsDir = FSUtils.join(pluginDir, 'models');
             this.loadSchemas(pluginModelsDir);
@@ -55,12 +55,12 @@ class ModelsLoader {
      */
     public modifySchemasWithPlugins() {
         ModelsLoader.logger.debug("Modifying schema with Plugins");
-        var modelsNames:string[] = Object.keys(this.models);
-        var plugins:string[] = this.pluginRegistry.getPluginNames();
+        var modelsNames: string[] = Object.keys(this.models);
+        var plugins: string[] = this.pluginRegistry.getPluginNames();
 
-        modelsNames.forEach((modelName)=> {
+        modelsNames.forEach((modelName) => {
             ModelsLoader.logger.debug("\t %s", modelName);
-            plugins.forEach((pluginName)=> {
+            plugins.forEach((pluginName) => {
                 ModelsLoader.logger.debug("\t\t Calling %s", pluginName);
                 var plugin = this.pluginRegistry.getPlugin(pluginName).plugin;
                 if (plugin.modifySchemaFromModel) {
@@ -74,12 +74,12 @@ class ModelsLoader {
     public compileSchemasToModels() {
         ModelsLoader.logger.debug("Compiling Schemas to Mongoose Models");
         var keys = Object.keys(this.models);
-        keys.forEach((modelName)=> {
+        keys.forEach((modelName) => {
             ModelsLoader.logger.debug("\t %s", modelName);
 
             var collection = undefined;
-            if(this.models[modelName].collection) {
-                collection = this.models[modelName].collection;
+            if (this.models[modelName].collectionName) {
+                collection = this.models[modelName].collectionName;
             }
 
             if (this.models[modelName].baseModel) {
@@ -88,6 +88,7 @@ class ModelsLoader {
                 this.models[baseModel] = baseModelObject;
                 this.models[modelName] = baseModelObject.discriminator(modelName, this.models[modelName].schema);
             } else {
+                console.log("-> " + modelName + " <- -> ", collection);
                 this.models[modelName] = mongoose.model(modelName, this.models[modelName].schema, collection);
             }
         });
@@ -99,8 +100,8 @@ class ModelsLoader {
      * @param srcpath
      */
     private loadSchemas(srcpath) {
-        var dirs:string[] = FSUtils.getDirectories(srcpath);
-        dirs.forEach((dir)=> {
+        var dirs: string[] = FSUtils.getDirectories(srcpath);
+        dirs.forEach((dir) => {
             ModelsLoader.logger.debug("\t %s", dir);
             var Model = require(FSUtils.join(srcpath, dir));
             if (Model.modelName && Model.schema) {
@@ -116,7 +117,7 @@ class ModelsLoader {
         });
     }
 
-    public loadModels():void {
+    public loadModels(): void {
         this.loadProjectSchemas();
         this.loadPluginSchemas();
         this.modifySchemasWithPlugins();
@@ -127,9 +128,9 @@ class ModelsLoader {
         return this._models;
     }
 
-    public forEachModel(callback:(model)=>void) {
+    public forEachModel(callback: (model) => void) {
         var modelKeys = Object.keys(this.models);
-        modelKeys.forEach((modelName)=> {
+        modelKeys.forEach((modelName) => {
             callback(this.models[modelName]);
         });
     }
