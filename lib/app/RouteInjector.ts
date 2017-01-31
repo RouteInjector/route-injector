@@ -67,8 +67,7 @@ class RouteInjector {
         RouteInjector.logger.info(" |   |   |  \\   |  \\  ___/\\  \\___|  | (  <_> )  | \\/  ");
         RouteInjector.logger.info(" |___|___|  /\\__|  |\\___  >\\___  >__|  \\____/|__|     ");
         RouteInjector.logger.info("          \\/\\______|    \\/     \\/                     ");
-        RouteInjector.logger.info("
-");
+        RouteInjector.logger.info("");
         RouteInjector.logger.info("RouteInjector version: %s", this.version);
     }
 
