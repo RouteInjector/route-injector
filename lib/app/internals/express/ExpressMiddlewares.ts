@@ -40,7 +40,7 @@ export function cors() {
 
 export function notFoundHandler() {
     return function (req, res, next) {
-        var err:any = {};
+        let err:any = {};
         err.status = 404;
         err.message = "404 - Not Found";
         next(err);
@@ -51,6 +51,12 @@ export function redirectHandler(url:String) {
     return function (req, res, next) {
         res.redirect(url);
     };
+}
+
+export function angularNotFoundHandler(indexPath) {
+    return function (req, res, next) {
+        res.sendFile('index.html', { root: indexPath });
+    }
 }
 
 export function errorHandler() {

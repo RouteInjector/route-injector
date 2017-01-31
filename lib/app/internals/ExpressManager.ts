@@ -240,7 +240,8 @@ class ExpressManager {
                 // do nothing, so 404 can be intercepted in bin/www
             } else if(this.config.application.notFound == "angular") {
                 // return index.html without redirect
-                // TODO
+                let path = FSUtils.join(this.config.appPath, this.config.application.indexPath);
+                this.app.use(ExpressMiddlewares.angularNotFoundHandler(path));
             } else {
                 // make a redirect to the URL specified.
                 this.app.use(ExpressMiddlewares.redirectHandler("http://www.ondho.com"));
