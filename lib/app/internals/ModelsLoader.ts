@@ -76,13 +76,19 @@ class ModelsLoader {
         var keys = Object.keys(this.models);
         keys.forEach((modelName)=> {
             ModelsLoader.logger.debug("\t %s", modelName);
+
+            var collection = undefined;
+            if(this.models[modelName].collection) {
+                collection = this.models[modelName].collection;
+            }
+
             if (this.models[modelName].baseModel) {
                 var baseModel = this.models[modelName].baseModel;
-                var baseModelObject = mongoose.model(baseModel, this.models[baseModel].schema);
+                var baseModelObject = mongoose.model(baseModel, this.models[baseModel].schema, collection);
                 this.models[baseModel] = baseModelObject;
                 this.models[modelName] = baseModelObject.discriminator(modelName, this.models[modelName].schema);
             } else {
-                this.models[modelName] = mongoose.model(modelName, this.models[modelName].schema);
+                this.models[modelName] = mongoose.model(modelName, this.models[modelName].schema, collection);
             }
         });
         ModelsLoader.logger.debug("");

@@ -18,7 +18,7 @@ abstract class RiResponse {
         return {
             error: this.error,
             message: this.message
-        }
+        };
     }
 }
 

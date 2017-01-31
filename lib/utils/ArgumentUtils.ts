@@ -4,17 +4,17 @@
 
 /// <reference path='../../typings/index.d.ts'/>
 class ArgumentUtils {
-    private static args = require('minimist')(process.argv.slice(2));
+    private static args = require("minimist")(process.argv.slice(2));
 
-    public static getArguments():string[] {
+    public static getArguments(): string[] {
         return Object.keys(ArgumentUtils.args);
     }
 
-    public static exists(string):boolean {
+    public static exists(string): boolean {
         return ArgumentUtils.args[string] ? true : false;
     }
 
-    public static getValue(argumentName):any{
+    public static getValue(argumentName): any {
         return ArgumentUtils.args[argumentName];
     }
 }

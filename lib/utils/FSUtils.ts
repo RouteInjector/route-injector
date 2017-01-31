@@ -2,7 +2,6 @@
  * Created by gerard on 1/18/16.
  */
 ///<reference path='../../typings/index.d.ts'/>
-
 import fs = require('fs');
 import path = require('path');
 import glob = require('glob');
@@ -73,9 +72,9 @@ class FSUtils {
     }
 
     static getAllFilesRecursivelyByType(path, expression, dirPrefix) {
-        var files = glob.sync(FSUtils.join(path, expression));
-        return files.map(function (file) {
-            return FSUtils.join(dirPrefix, FSUtils.relative(path, file)).replace(/\\/g, '/');
+        let files = glob.sync(FSUtils.join(path, expression));
+        return files.map(function(file){
+            return FSUtils.join(dirPrefix, FSUtils.relative(path, file)).replace(/\\/g, "/");
         });
     }
 

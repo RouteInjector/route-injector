@@ -5,7 +5,7 @@
 import RiResponse = require("./Response");
 class NotFound extends RiResponse {
 
-    constructor(msg:string) {
+    constructor(msg: string) {
         super("Not Found", msg);
     }
 
