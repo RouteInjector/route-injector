@@ -12,8 +12,9 @@ class GalleryInjector {
     private routeInjector: IInternalRouteInjector;
     private galleryConfig: IGalleryConfig;
 
-    private galleryEndpoint: string;
     private galleryFilepath: string;
+    private galleryEndpoint: string;
+    private prefix: string;
 
     private listDirectoryRoles: string[];
     private postImageRoles: string[];
@@ -27,6 +28,7 @@ class GalleryInjector {
     constructor(routeInjector: IInternalRouteInjector) {
         this.routeInjector = routeInjector;
         this.galleryConfig = this.routeInjector.config.env.images && this.routeInjector.config.env.images.gallery || undefined;
+        this.prefix = this.routeInjector.config.routes.prefix;
     }
 
     public static create(routeInjector: IInternalRouteInjector): GalleryInjector {
@@ -70,7 +72,7 @@ class GalleryInjector {
     }
 
     private handleGetImagesList() {
-        this.routeInjector.app.get(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.listDirectoryRoles).middleware, this.fileExistsMiddleware, (req, res, next) => {
+        this.routeInjector.app.get(this.prefix + this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.listDirectoryRoles).middleware, this.fileExistsMiddleware, (req, res, next) => {
             let path = req.filepath;
             let files = FSUtils.getClassifiedFileMap(path);
             res.json(files);
@@ -79,7 +81,7 @@ class GalleryInjector {
     }
 
     private handlePostImage() {
-        this.routeInjector.app.post(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware,
+        this.routeInjector.app.post(this.prefix + this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware,
             this.checkRole(this.postImageRoles).middleware, this.upload.array("file[]"), (req, res, next) => {
                 let files = req.files;
                 let path = req.param("path", "");
@@ -98,11 +100,11 @@ class GalleryInjector {
 
     private handleGetImage() {
         let express = this.routeInjector.internals.express;
-        this.routeInjector.app.use(this.galleryEndpoint, express.static(this.galleryFilepath));
+        this.routeInjector.app.use(this.prefix + this.galleryEndpoint, express.static(this.galleryFilepath));
     }
 
     private handleDeleteImage() {
-        this.routeInjector.app.delete(this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.deleteImageRoles).middleware, this.fileExistsMiddleware, (req, res, next) => {
+        this.routeInjector.app.delete(this.prefix + this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.deleteImageRoles).middleware, this.fileExistsMiddleware, (req, res, next) => {
             FSUtils.remove(req.filepath);
             res.statusCode = 200;
             res.json({
