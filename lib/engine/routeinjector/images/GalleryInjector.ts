@@ -99,7 +99,6 @@ class GalleryInjector {
     }
 
     private handleGetImage() {
-        let express = this.routeInjector.internals.express;
             var IMGR = require('imgr').IMGR;
             var imgr= new IMGR(this.routeInjector.config.env.images.imgrConfig || {});
 
@@ -108,9 +107,6 @@ class GalleryInjector {
                 .cacheDir(this.routeInjector.config.env.images.cache)
                 .urlRewrite('/:path/:size/:file.:ext') // '/:path/:size/:file.:ext'
                 .using(this.routeInjector.app);
-
-
-        this.routeInjector.app.use(this.prefix + this.galleryEndpoint, express.static(this.galleryFilepath));
     }
 
     private handleDeleteImage() {
