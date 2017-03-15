@@ -1,1 +1,1 @@
-{"version":3,"file":"IPage.js","sourceRoot":"","sources":["IPage.ts"],"names":[],"mappings":";AAAA;;GAEG;AACH,IAAY,QAEX;AAFD,WAAY,QAAQ;IAChB,mEAAkB,CAAA;IAAE,6EAAuB,CAAA;IAAE,+DAAgB,CAAA;IAAE,yEAAqB,CAAA;AACxF,CAAC,EAFW,QAAQ,GAAR,gBAAQ,KAAR,gBAAQ,QAEnB"}
+{"version":3,"file":"IPage.js","sourceRoot":"","sources":["IPage.ts"],"names":[],"mappings":";;AAAA;;GAEG;AACH,IAAY,QAEX;AAFD,WAAY,QAAQ;IAChB,mEAAkB,CAAA;IAAE,6EAAuB,CAAA;IAAE,+DAAgB,CAAA;IAAE,yEAAqB,CAAA;AACxF,CAAC,EAFW,QAAQ,GAAR,gBAAQ,KAAR,gBAAQ,QAEnB"}

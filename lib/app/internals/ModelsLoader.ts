@@ -88,7 +88,6 @@ class ModelsLoader {
                 this.models[baseModel] = baseModelObject;
                 this.models[modelName] = baseModelObject.discriminator(modelName, this.models[modelName].schema);
             } else {
-                console.log("-> " + modelName + " <- -> ", collection);
                 this.models[modelName] = mongoose.model(modelName, this.models[modelName].schema, collection);
             }
         });
