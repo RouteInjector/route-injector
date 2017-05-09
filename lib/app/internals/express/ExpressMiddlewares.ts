@@ -20,7 +20,6 @@ export function expressSetup(app:Express, viewsPath:string, viewEngine:string) {
     });
 
     logger.token('user', function getUser (req) {
-        console.log(req);
        return (req.user ? JSON.stringify(req.user) : "");
     });
 
