@@ -3,6 +3,7 @@
  */
 import {Request} from "express";
 import {Response} from "express";
+import {NextFunction} from "express";
 
 import passport = require('passport');
 import Logger = require("../Logger");
@@ -38,7 +39,7 @@ class PassportLocal {
                     return done(null, false);
                 } else {
                     if (this.config.login.stateless) {
-                        PassportLocal.logger.debug("Authorized user: ", decoded[this.config.login.key]);
+                        PassportLocal.logger.trace("Authorized user: ", decoded[this.config.login.key]);
                         return done(null, decoded, {scope: 'all'});
                     } else {
                         PassportLocal.logger.debug(decoded);
@@ -65,7 +66,7 @@ class PassportLocal {
         return new PassportLocal(config);
     }
 
-    public getUserIfExists(req:Request, res:Response, next:Function) {
+    public getUserIfExists(req:Request, res:Response, next:NextFunction) {
         passport.authenticate('bearer', {session: false}, function (err, user, info) {
             if (err) {
                 PassportLocal.logger.error(err);
@@ -78,7 +79,7 @@ class PassportLocal {
         })(req, res, next);
     }
 
-    public needsValidUser(req:Request, res:Response, next:Function) {
+    public needsValidUser(req:Request, res:Response, next:NextFunction) {
         passport.authenticate('bearer', {session: false}, function (err, user, info) {
             if (err) {
                 PassportLocal.logger.error(err);

@@ -79,7 +79,7 @@ class ExpressManager {
      * Setup express configurations
      */
     private expressSetup() {
-        ExpressMiddlewares.expressSetup(this.app, this.config.appPath, this.config.application.view_engine);
+        ExpressMiddlewares.expressSetup(this.app, this.config);
     }
 
     /**

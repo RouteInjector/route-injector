@@ -37,6 +37,9 @@ class DBConnection {
             cb();
         });
         mongoose.connect('mongodb://' + this.config.env.database.endpoint + '/' + this.config.env.database.name);
+
+        // Set ES6 promises
+        require('mongoose').Promise = global.Promise
     }
 
     get mongoose():any {

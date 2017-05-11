@@ -11,16 +11,17 @@ import RiResponse = require("../../../responses/Response");
 import Logger = require("../Logger");
 import multer = require("multer");
 
-export function expressSetup(app:Express, viewsPath:string, viewEngine:string) {
-    app.set('views', FSUtils.join(viewsPath, 'views'));
-    app.set('view engine', viewEngine || 'ejs');
+export function expressSetup(app:Express, config:any) {
+
+    app.set('views', FSUtils.join(config.appPath, 'views'));
+    app.set('view engine', config.application.view_engine || 'ejs');
 
     logger.token('body', function getUrlToken (req) {
       return req.__body || "";
     });
 
     logger.token('user', function getUser (req) {
-       return (req.user ? JSON.stringify(req.user) : "");
+       return (req.user ? '"'+req.user[config.auth.login.key]+'"' : "");
     });
 
     function headersSent (res) {
