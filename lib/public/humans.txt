@@ -9,6 +9,13 @@
 
     Backend & Frontend: Juan López
     Contact: juan.lopez [at] alteraid.com
+    
+    Backend: Alex Baena
+    Contact: a.baena [at] ondho.com
+
+    Backend: Antonio Chillarón
+    Contact: achillar [at] gmail.com
+
 
 /* THANKS */
 
@@ -38,7 +45,14 @@
 
 /* CURRENT PROJECTS USING THIS FRAMEWORK */
 
-    http://www.mycook.es/
+    https://mycook.es/
     https://asbarcelona.com
     https://www.aaaida.com
     https://careup.aaaida.com
+    https://conkansei.com
+    https://mycook.dk
+    https://mycook.se
+    https://mycook.fi
+    https://mycook.no
+    https://wittmycoo0k.co.uk
+    
