@@ -67,13 +67,14 @@ class PermissionsLoader {
                 delete: this.addRoles(m.delete),
                 search: this.addRoles(m.search),
                 import: this.addRoles(m.import),
-                export: this.addRoles(m.export)
+                export: this.addRoles(m.export),
+                menu: this.addRoles(m.menu)
             }
         });
     }
 
     private processRoutes() {
-        var verbs = ['get', 'put', 'post', 'delete', 'search', 'import', 'export'];
+        var verbs = ['get', 'put', 'post', 'delete', 'search', 'import', 'export', 'menu'];
         PermissionsLoader.logger.trace("Process Routes:")
         Object.keys(this.holder.routes).forEach((route)=> {
             PermissionsLoader.logger.trace("\t Route: %s", route);
@@ -97,7 +98,7 @@ class PermissionsLoader {
     private processAllPermissionsByRole() {
         var result = {};
         var allModels = Object.keys(this.holder.routes);
-        var verbs = ["get", "post", "delete", "search", "put", "export", "import"];
+        var verbs = ["get", "post", "delete", "search", "put", "export", "import", "menu"];
 
 
         for (var modelName in this.holder.routes) {
@@ -124,13 +125,13 @@ class PermissionsLoader {
 
         for (var r in this.roles) {
             if (this.roles.hasOwnProperty(r)) {
-                var role:any = this.roles[r];
+                var role:string = this.roles[r];
 
                 for (var m in allModels) {
                     if(allModels.hasOwnProperty(m)) {
                         var model:any = allModels[m];
                         for (var v in verbs) {
-                            var verb:any = verbs[v];
+                            var verb:string = verbs[v];
                             if (this.holder.routes[model][verb].indexOf(role) == -1) {
                                 if (!result[role][model]) {
                                     result[role][model] = {};

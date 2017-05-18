@@ -182,8 +182,8 @@ class ExpressManager {
      */
     private exportPluginsStatics(): void {
         ExpressManager.logger.info("Exporting Plugin Statics");
-        this.pluginRegistry.getUrlAndDirForEachStatics((pluginName, url, dir)=> {
-            this.exportStatic(url, dir);
+        this.pluginRegistry.getUrlAndDirForEachStatics((pluginName, url, dir, options)=> {
+            this.exportStatic(url, dir, options);
             ExpressManager.logger.debug("\t %s maps to directory %s", url, dir);
         });
         ExpressManager.logger.debug("");
@@ -222,8 +222,8 @@ class ExpressManager {
      */
     private exportApplicationStatics() {
         ExpressManager.logger.info("Exporting Application Statics");
-        ConfigUtils.create(this.config).getApplicationStatics((url, path)=> {
-            this.exportStatic(url, path);
+        ConfigUtils.create(this.config).getApplicationStatics((url, path, options)=> {
+            this.exportStatic(url, path, options);
             ExpressManager.logger.debug("\t %s maps to directory /%s", url, FSUtils.relative(this.config.appPath, path));
         });
         ExpressManager.logger.info("");
@@ -282,8 +282,11 @@ class ExpressManager {
         return express;
     }
 
-    private exportStatic(url: string, path: string) {
-        this.app.use(url, express.static(path));
+    private exportStatic(url: string, path: string, options?: any) {
+        if(!options) {
+            options = {maxage: '1d'};
+        }
+        this.app.use(url, express.static(path, options));
     }
 
 

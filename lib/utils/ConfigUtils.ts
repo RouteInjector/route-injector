@@ -16,14 +16,14 @@ class ConfigUtils {
         return new ConfigUtils(config);
     }
 
-    public getApplicationStatics(callback: (url: string, path: string) => void) {
+    public getApplicationStatics(callback: (url: string, path: string, options: any) => void) {
         if (this.config.application.statics && this.config.application.statics instanceof Array) {
             let staticExports: string[] = Object.keys(this.config.application.statics);
             staticExports.forEach((staticExport) => {
                 let s = this.config.application.statics[staticExport];
                 if (s.folder) {
                     let staticDirectory = FSUtils.join(this.config.appPath, s.folder);
-                    callback(s.url, staticDirectory);
+                    callback(s.url, staticDirectory, s.options);
                 }
             });
         }

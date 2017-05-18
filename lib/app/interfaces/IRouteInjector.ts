@@ -6,6 +6,7 @@ import {Schema} from "mongoose";
 import Configurations = require("../internals/Configurations");
 import {IRouter} from "express";
 import AuthManager = require("../internals/AuthManager");
+
 export interface IRouteInjector {
     start(cb: () => void);
     log: any;
@@ -16,7 +17,7 @@ export interface IRouteInjector {
 
 export interface IInternalRouteInjector extends IRouteInjector {
     plugins();
-    app: IRouter;
+    app: IRouter<any>;
     internals: any;
     security: AuthManager;
 }

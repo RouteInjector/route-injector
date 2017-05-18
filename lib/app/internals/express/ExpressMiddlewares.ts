@@ -17,7 +17,7 @@ export function expressSetup(app:Express, config:any) {
     app.set('view engine', config.application.view_engine || 'ejs');
 
     logger.token('body', function getUrlToken (req) {
-      return req.__body || "";
+      return (req as any).__body || "";
     });
 
     logger.token('user', function getUser (req) {
@@ -25,35 +25,37 @@ export function expressSetup(app:Express, config:any) {
     });
 
     function headersSent (res) {
-      return typeof res.headersSent !== 'boolean'
-          ? Boolean(res._header)
-              : res.headersSent
-              }
+        return typeof res.headersSent !== 'boolean'
+            ? Boolean(res._header)
+            : res.headersSent
+    }
 
-	logger.format('ri', function developmentFormatLine (tokens, req, res) {
-	  // get the status code if response written
-	  var status = headersSent(res)
-		? res.statusCode
-		: undefined
+    // Avoid Typescript Error TS2339 (Morgan typings lacks format)
+    (logger as any).format('ri', function developmentFormatLine (tokens, req, res) {
+        // get the status code if response written
+        var status = headersSent(res)
+            ? res.statusCode
+            : undefined
 
-	  // get status color
-	  var color = status >= 500 ? 31 // red
-		: status >= 400 ? 33 // yellow
-		: status >= 300 ? 36 // cyan
-		: status >= 200 ? 32 // green
-		: 0 // no color
+        // get status color
+        var color = status >= 500 ? 31 // red
+            : status >= 400 ? 33 // yellow
+            : status >= 300 ? 36 // cyan
+            : status >= 200 ? 32 // green
+            : 0 // no color
 
-	  // get colored function
-	  var fn = developmentFormatLine[color]
+        // get colored function
+        var fn = developmentFormatLine[color]
 
-	  if (!fn) {
-		// compile
-		fn = developmentFormatLine[color] = logger.compile('\x1b[0m:method :url :body :user \x1b[' +
-		  color + 'm:status \x1b[0m:response-time ms - :res[content-length]\x1b[0m')
-	  }
+        if (!fn) {
+            // compile
+            // Avoid Typescript Error TS2339 (Morgan typings lacks compile)
+            fn = developmentFormatLine[color] = (logger as any).compile('\x1b[0m:method :url :body :user \x1b[' +
+                color + 'm:status \x1b[0m:response-time ms - :res[content-length]\x1b[0m')
+        }
 
-	  return fn(tokens, req, res)
-	})
+        return fn(tokens, req, res)
+    })
 
     //app.use(logger(':method :url :body :status :response-time ms - :res[content-length]'));
     app.use(logger('ri'));

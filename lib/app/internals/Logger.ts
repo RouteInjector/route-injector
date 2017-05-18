@@ -10,10 +10,6 @@ import FSUtils = require("../../utils/FSUtils");
 var prettyStdOut = new PrettyStream();
 prettyStdOut.pipe(process.stdout);
 class Logger {
-    private static DEFAULT_LOGGER_NAME = "RouteInjector";
-    private static logger = Logger.createCustomLogger(Logger.DEFAULT_LOGGER_NAME, {
-        level: "info"
-    });
 
     /**
      * Get a logger to log your application
@@ -44,6 +40,11 @@ class Logger {
             }]
         });
     }
+
+    private static DEFAULT_LOGGER_NAME = "RouteInjector";
+    private static logger = Logger.createCustomLogger(Logger.DEFAULT_LOGGER_NAME, {
+        level: "info"
+    });
 
     /**
      * Set name

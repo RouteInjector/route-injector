@@ -89,13 +89,13 @@ class PluginRegistry {
         return plugins;
     }
 
-    public getUrlAndDirForEachStatics(callback:(pluginName:string, url:string, dir:string)=>void) {
+    public getUrlAndDirForEachStatics(callback:(pluginName:string, url:string, dir:string, options?:any)=>void) {
         var pluginsWithStatics = this.getPluginsWithStatics();
         pluginsWithStatics.forEach((plugin:IMetaPlugin)=> {
             plugin.plugin.statics.forEach((staticExport)=> {
                 var staticDirectory = FSUtils.join(plugin.path, staticExport.folder);
                 if (FSUtils.exists(staticDirectory)) {
-                    callback(plugin.plugin.name, staticExport.url, staticDirectory);
+                    callback(plugin.plugin.name, staticExport.url, staticDirectory, staticExport.options);
                 }
             });
         });

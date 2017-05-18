@@ -5,11 +5,11 @@
 import RiResponse = require("./Response");
 class InternalServerError extends RiResponse {
 
-    constructor() {
-        super("Internal Server Error", "");
-    }
-
-    constructor(msg: string) {
+    constructor(msg?: string) {
+        var m = "";
+        if(msg) {
+            m = msg;
+        }
         super("Internal Server Error", msg);
     }
 
