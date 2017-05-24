@@ -38,7 +38,7 @@
     "express": "4.9.8",
     "express-session": "*",
     "glob": "*",
-    "imgr": "*",
+    "imgr": "https://github.com/jlopezr/imgr.git",
     "jade": "*",
     "json2xls": "*",
     "jsonwebtoken": "5.7.0",
