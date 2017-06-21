@@ -9,13 +9,15 @@
 
     Backend & Frontend: Juan López
     Contact: juan.lopez [at] alteraid.com
-    
+
     Backend: Alex Baena
     Contact: a.baena [at] ondho.com
 
     Backend: Antonio Chillarón
     Contact: achillar [at] gmail.com
 
+    Frontend & Design: Laura Jové
+    Contact: laura [at] ondho.com
 
 /* THANKS */
 
@@ -24,9 +26,6 @@
 
     Backend: Eric Lara
     Contact: e.lara [at] ondho.com
-
-    Design: Laura Jové
-    Contact: laura [at] ondho.com
 
     Ariadna Ginjaume
     Contact: ariadna [at] ondho.com
@@ -54,5 +53,4 @@
     https://mycook.se
     https://mycook.fi
     https://mycook.no
-    https://wittmycoo0k.co.uk
-    
+    https://wittmycook.co.uk
