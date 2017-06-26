@@ -16,7 +16,7 @@ class MiddlewareRegistry {
         this.config = config;
         MiddlewareRegistry.logger.trace("Creating MiddlewareRegistry instance");
         config.routes = config.routes || {};
-        this.customMiddlewareDirs = config.routes.customMiddlewareDirs || [];
+        this.customMiddlewareDirs = config.routes.customMiddlewares || [];
     }
 
     public static create(config:Configurations) {
@@ -25,7 +25,7 @@ class MiddlewareRegistry {
 
     forEachMiddleware(callback:(middleware)=>void):void {
         this.customMiddlewareDirs.forEach((dir)=> {
-            var absFolder = FSUtils.join(this.config, dir);
+            var absFolder = FSUtils.join(this.config.appPath, dir);
             var files = FSUtils.getFiles(absFolder);
             files.forEach((file)=> {
                 var middleware = require(FSUtils.join(absFolder, file));
