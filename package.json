@@ -1,6 +1,7 @@
 {
   "name": "route-injector",
   "version": "2.1.15",
+  "repository": "https://github.com/RouteInjector/route-injector",
   "contributors": [
     {
       "name": "Alex Albalá",
@@ -18,31 +19,27 @@
   "description": "RouteInjector",
   "main": "index.js",
   "scripts": {
-    "transpile": "./command.sh transpile",
-    "transpile_git_hook": "./command.sh transpile_pre_commit"
+    "precommit": "./command.sh transpile_pre_commit",
+    "transpile": "./command.sh transpile"
   },
   "peerDependencies": {
     "mongoose": "^4.5.8"
   },
   "dependencies": {
-    "async": "0.9.0",
+    "async": "*",
     "body-parser": "~1.8.1",
     "bunyan": "*",
     "bunyan-prettystream": "*",
     "change-case": "*",
-    "colors": "*",
     "cookie-parser": "~1.3.3",
-    "debug": "~2.0.0",
     "deepjson2csv": "*",
-    "ejs": "*",
     "express": "4.9.8",
     "express-session": "*",
     "glob": "*",
     "http-status-codes": "^1.1.6",
     "imgr": "https://github.com/jlopezr/imgr.git",
-    "jade": "*",
     "json2xls": "*",
-    "jsonwebtoken": "5.7.0",
+    "jsonwebtoken": "*",
     "lodash": "*",
     "lodash-contrib": "*",
     "mime": "^1.3.4",
@@ -50,34 +47,24 @@
     "mkdirp": "^0.5.1",
     "morgan": "~1.8.1",
     "multer": "~1.2.1",
-    "mustache": "*",
-    "node-bugsense": "*",
     "node-zip": "*",
     "passport": "*",
     "passport-http-bearer": "*",
     "path": "*",
     "q": "*",
     "request": "*",
-    "ri-backoffice": "2.1.x",
+    "ri-backoffice": "^2.1.0",
     "ri-swagger": "^2.0.0",
-    "serve-favicon": "~2.1.3",
-    "underscore": "*",
-    "versiony": "*",
     "vhost": "*",
     "wordpress-hash-node": "*"
   },
   "devDependencies": {
     "bower": "*",
-    "ghooks": "^1.3.2",
+    "husky": "^0.14.1",
     "jsdoc": "*",
     "mocha": "^3.1.0",
-    "typedoc": "0.3.12",
-    "typescript": "2.2.1",
-    "typings": "1.5.0"
-  },
-  "config": {
-    "ghooks": {
-      "pre-commit": "npm run transpile_git_hook"
-    }
+    "typedoc": "*",
+    "typescript": "*",
+    "typings": "*"
   }
 }

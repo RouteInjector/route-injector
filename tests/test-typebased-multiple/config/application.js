@@ -2,6 +2,6 @@ module.exports = {
     name: "Test-Simple",
     logo: "",
     favicon: "",
-    view_engine: 'jade',
+    //view_engine: 'ejs',
     statics: [{url: '/', folder: 'public'}]
 };
