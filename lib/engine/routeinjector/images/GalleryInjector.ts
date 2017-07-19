@@ -4,7 +4,8 @@ import FSUtils = require("../../../utils/FSUtils");
 import NotFound = require("../../../responses/NotFound");
 import multer = require("multer");
 import {Request} from "express";
-
+import * as child from 'child_process';
+import {format} from 'util';
 
 class GalleryInjector {
     static logger = Logger.getLogger();
@@ -98,9 +99,45 @@ class GalleryInjector {
             });
     }
 
+    private optimiseImage(image, callback) {
+        GalleryInjector.logger.debug("OPTIMIZING ", image);
+        if (/\.png$/i.test(image)) {
+            GalleryInjector.logger.debug("PNG", image);
+            image = image.replace("$","\\$");
+            let p = child.exec(format('optipng "%s"', image), callback);
+
+            p.stdout.on('data', function(data) {
+                GalleryInjector.logger.debug(data);
+            });
+
+            p.stderr.on('data', function(data) {
+                GalleryInjector.logger.debug(data);
+            });
+
+        } else if (/\.jpe?g$/i.test(image)) {
+            image = image.replace("$","\\$");
+            GalleryInjector.logger.debug("JPEG ", image);
+            let p = child.exec(format('jpegoptim -m90 -o "%s"', image), callback);
+
+            p.stdout.on('data', function(data) {
+                GalleryInjector.logger.debug(data);
+            });
+
+            p.stderr.on('data', function(data) {
+                GalleryInjector.logger.debug(data);
+            });
+        } else {
+            callback();
+        }
+    }
+
     private handleGetImage() {
-            var IMGR = require('imgr').IMGR;
-            var imgr= new IMGR(this.routeInjector.config.env.images.imgrConfig || {});
+            let IMGR = require('imgr').IMGR;
+            let config = this.routeInjector.config.env.images.imgrConfig || {};
+            if(config.optimisation == undefined) {
+                config.optimisation = this.optimiseImage;
+            }
+            let imgr = new IMGR(config);
 
             imgr.serve(this.routeInjector.config.env.images.path) //folder
                 .namespace(this.prefix + this.galleryEndpoint)// /image
