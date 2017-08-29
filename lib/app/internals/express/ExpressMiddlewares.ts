@@ -59,7 +59,7 @@ export function expressSetup(app:Express, config:any) {
 
     //app.use(logger(':method :url :body :status :response-time ms - :res[content-length]'));
     app.use(logger('ri'));
-    app.use(bodyParser.json());
+    app.use(bodyParser.json(config.application.json_limit));
     app.use(bodyParser.urlencoded({extended: false}));
     // TODO: multipart has been broken. Rework with new multer
     // app.use(multer());
