@@ -89,7 +89,11 @@ class GalleryInjector {
                 if (path !== "") {
                     FSUtils.createDirectory(FSUtils.join(this.galleryFilepath, path));
                 }
-                let partialPath = this.galleryEndpoint + "/" + path + "/";
+
+                let partialPath = this.prefix + this.galleryEndpoint + "/" + path;
+                if (path){
+                    partialPath = partialPath + "/" 
+                }
                 for (let i = 0; i < files.length; i++) {
                     files[i] = partialPath + files[i].originalname;
                 }
