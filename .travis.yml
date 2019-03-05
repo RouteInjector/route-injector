@@ -1,32 +1,25 @@
 sudo: false
 services: mongodb
-
 language: node_js
 node_js:
-  - '6'
-
+- '6'
 install:
-  - "./command.sh install"
-
+- "./command.sh install"
 script:
-  - "./command.sh build"
-  - "./command.sh test"
-
+- "./command.sh build"
+- "./command.sh test"
 before_deploy: "./command.sh release"
-
 deploy:
   provider: npm
-  email: g.sole.ca@gmail.com
+  email: j.lopez.r@gmail.com
   api_key:
-    secure: Pxu4LVKaY40kaH8Wt5pcfj85uoRJG0o+2tD+EOO/jn/ldhI0knOIHTzh8uQDKTzdaLUfy13OVK2K4uF2vKteKDrVcNGFlpHg1GnDunSmlgez0ryXoWwk5+eJ7mTWc3SaBEFgKXi4Z/DvM3RTzx0vU7rinLC25rzIrOsQVJ25n4uENCCG6B1LdCOtcc5igQWMfL1hmgtSgL3T2vAora6uFsimQXiNbFE8cLDTAdneQjWv6on0jc7VQAQ/z2RGyK+33xhK4F5YcB500xOjy+eh+65b+I3w93mHbsUzYyt5kiJA1/c5Rm6s11Y6vtIfp97YrpWrHQFCTKKepjTPwAycFQTPfdGlN3dL//6uCtXUkYPX3bPq3tzfQQy+tD4ayk7t1vZZaJXYRKEFTrHNVX8X5ZLLeA2qd3mS/Wr3Yhg2OIljV+YjvHSuIlZmdFNSUMgFzs2GrWaYvgqXJl9JOX16Lb7BzbYLi2p3G9gawWoaXUd4VRgzNnojxtVOJxdDqc9ZoQ42BPYG0kSMrbkYWoimhuxM0TwTSrARgeA1GH8zrnW5VZt4t3RIwNAuxUF7o9l60f+wBkJ3dLptFFb8b+7MXXEfvrXSNhDhb8RUDh/duIaZ+UT4m2IhF0LiV12o9oFiQif0BQYaxlXsppBC/BgP4CNWuEvvFdEkd6H6cnqYZtE=
+    secure: cYdbJurdCw3p4UI15/XiGULjfPej1cK9VjI6dA3KAM96i68q4hOekens+C4cfVFrq8ne16FkFDMnA7eXLOVZpr0pMJyiBJfuK9B/14sNM1jdpnl4fEiJZmKisQrnKpFddsxe85EWkPGMB7adJhwKKEumYshZg7ecDSglIRh8xTq48r3+s6I5GTYCCjR4/D/TjBJ23K9xqKnZl22FuxTP1R+4FKpSD3UEWaWtFHlDswczI0hLW3H/zqR+ep3SS6fkgK1EL08na0Zso1KanK2cpvLDMj8l1wFE6t7hzx2VZ3bJBOE/RgCYET/xWEr9g6BZsA1IhFmmVKdi6Rpq9CMqyj0vdiidSFWn5oiS//9pN+5As1EN8JEZTq8p1UO9GffqKHztwf2a3HGo61+P4QLfpv7ckoiNrYsl+AQMjP5XbBqvZFdgDz0HsBTdoJCej3pP8Bw5SIvhhc7GaH7dXqhGV8AaTSasYdwukySay6Rw0a6tZJBV74rfzU2AMupa0dEqiLQ63eA0OOfL7I4lUFjyBYestN+HkvIzwcCENApDMzOoccFoV22V5N6awA8BX8oVlGL+49xNGx8OScC3GCqc5SQyzVvCLZUBMOpslbA3SE5pbarX76oOEhr9hqTGgOn1F1XAIHcQaKgHMjKEd0G/VLljs5qZgFJEvXaAXyTGMGc=
   on:
     tags: true
     repo: RouteInjector/route-injector
-    
 addons:
-    code_climate:
-        repo_token: ccd09456360940e25548406da9b0427dd12cd1ab07c040ea302b3e344a158f8a
-
+  code_climate:
+    repo_token: ccd09456360940e25548406da9b0427dd12cd1ab07c040ea302b3e344a158f8a
 notifications:
   email:
     on_success: change
@@ -34,6 +27,6 @@ notifications:
   slack:
     secure: md0LdTHXFkbgRytuYn389fR/NI+sbnvQHJj3CKWAlhtwpw2jD2YdxUFJQv/la3fxDOVyfbkmhltd1lsyakqO6ak/JC42NkLAzbno3f35FVAcpthroLOd4RAFzcN3vSWZwdzBcAayUOElEkvc4nafu5MkTJ5PaS3drazeV7CRuF/OBECW2UpADYFwOjzvm5zT5FO7Ymb4LCdJ5PdvDyNnCY/6pmS1jAX4YK7mlN6N6+dhuNAgsbKFSElmn11qLwklKge7yFC+KPxu28UZhkr53NBZTtOEf7tt9dm9vr2y2OeMJqckmFw5FlaBdP0PjfgOExyULF+jH6YdbKnruoKXNuDEG/rSutAnhZtpQG9e6OnJC7BtjlvJIo3AXKtrz/MyKR5yguQ5fqHrysYt2Lk7CYwWOJS38EY36UYJHFPduT9NoFhCkGSWKlWRgZdt89GoT2wzhXW2L5/lRpfsPaUayOwUkrc9eu0owhA2Z6wXp4wdlkQDHgoXZ93jY5JsuFyDOobtg2oBDQT/NSjAPNt/SLyY2B5cS0CuGzln5x/W0XJ8law4YUHcCVBqPC3m7SNABQdkMiNmevc5UJITWnfA2+3k3lRvZWG9yUGadiFNB+9bco3aDB4gBu4YyG5yipchJiitd5XjR/aV4hqugmAz6wDAbDkxz5+EttJf6SLfD18=
     template:
-      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
-      - "Change view : %{compare_url}"
-      - "Build details : %{build_url}"
+    - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+    - 'Change view : %{compare_url}'
+    - 'Build details : %{build_url}'
