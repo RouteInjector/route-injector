@@ -7,7 +7,7 @@ import bunyan = require('bunyan');
 import PrettyStream = require("bunyan-prettystream");
 import FSUtils = require("../../utils/FSUtils");
 
-var prettyStdOut = new PrettyStream();
+var prettyStdOut = new PrettyStream({mode:'pm2'});
 prettyStdOut.pipe(process.stdout);
 class Logger {
 
