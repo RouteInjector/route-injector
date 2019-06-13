@@ -26,7 +26,7 @@
     "mongoose": "^4.5.8"
   },
   "dependencies": {
-    "async": "*",
+    "async": "2.6.2",
     "body-parser": "~1.8.1",
     "bunyan": "*",
     "bunyan-prettystream": "https://github.com/jlopezr/node-bunyan-prettystream",
