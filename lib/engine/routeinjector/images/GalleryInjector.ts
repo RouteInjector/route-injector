@@ -222,8 +222,12 @@ class GalleryInjector {
 
                                 }
 
-                            } else 
+                            } else {
+
+                                req.url = req.url.split(".").slice(0, -1).join(".") + ".webp";
                                 next();
+                                
+                            }
                         } else
                             next()
                     } else
