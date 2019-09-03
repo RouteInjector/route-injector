@@ -196,31 +196,15 @@ class GalleryInjector {
                             let size = req.url.split("/").slice(-2)[0];
                             let [widthStr, heightStr] = size.split("x");
 
-                            let width = !isNaN(parseInt(widthStr)) ? parseInt(widthStr) : null;
-                            let height = !isNaN(parseInt(heightStr)) ? parseInt(heightStr) : null;
+                            let width = !isNaN(parseInt(widthStr)) ? parseInt(widthStr) : undefined;
+                            let height = !isNaN(parseInt(heightStr)) ? parseInt(heightStr) : undefined;
                             let fileNameNoExt = fileName.split(".").slice(0, -1).join(".");
 
                             let outputFile = path.join(this.routeInjector.config.env.images.cache, width ? size : "", fileNameNoExt + ".webp");
 
                             if (! await promisify(fs.exists)(outputFile)) {
-                            
-                                if (width) {
-
-                                    if (height) {
-
-                                        sharp(fileAbs).resize(width, height).toFile(outputFile, end);
-                            
-                                    } else {
-
-                                        sharp(fileAbs).resize(width).toFile(outputFile, end);
-
-                                    }
-                            
-                                } else {
-
-                                    sharp(fileAbs).toFile(outputFile, end);
-
-                                }
+                                
+                                sharp(fileAbs).resize(width, height).toFile(outputFile, end);
 
                             } else {
 
