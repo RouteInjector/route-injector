@@ -10,6 +10,7 @@ import * as path from "path";
 import * as fs from "fs";
 import { promisify } from "util";
 import * as sharp from "sharp";
+import * as mkdirp from "mkdirp";
 
 import ArgumentUtils = require("../../../utils/ArgumentUtils");
 class GalleryInjector {
@@ -173,10 +174,12 @@ class GalleryInjector {
 
         this.routeInjector.app.use(async (req, res, next) => {
 
-            function end (err) {
+            function end(err) {
 
-                if(!err)
+                if (!err)
                     req.url = req.url.split(".").slice(0, -1).join(".") + ".webp";
+                else
+                    console.error("SHARP: ", err);
 
                 next();
             }
@@ -185,42 +188,58 @@ class GalleryInjector {
 
                 if (req.url.startsWith(this.prefix + this.galleryEndpoint)) {
 
+                    const detectSize = /^[0-9]+x[0-9]*$|^[0-9]*x[0-9]+$|^[0-9]+x[0-9]+$/;
+                    let fileName: any = req.url.replace(this.prefix + this.galleryEndpoint, "").split("/");
 
-                    let fileName = req.url.split("/").pop();
+                    if (detectSize.test(fileName[fileName.length - 2]))
+                        fileName.splice(-2, 1);
+
+                    fileName = fileName.join("/");
+
                     let fileAbs = path.join(this.routeInjector.config.env.images.path, fileName);
 
                     if (await promisify(fs.exists)(fileAbs)) {
 
                         if (supportsWebP(req.headers)) {
+                            let maybeSize = req.url.split("/").splice(-2, 1)[0];
+                            let size = null, widthStr = null, heightStr = null, width = undefined, height = undefined;
 
-                            let size = req.url.split("/").slice(-2)[0];
-                            let [widthStr, heightStr] = size.split("x");
+                            if (detectSize.test(maybeSize)) {
+                            
+                                size = maybeSize;
+                                [widthStr, heightStr] = size.split("x");
 
-                            let width = !isNaN(parseInt(widthStr)) ? parseInt(widthStr) : undefined;
-                            let height = !isNaN(parseInt(heightStr)) ? parseInt(heightStr) : undefined;
-                            let fileNameNoExt = fileName.split(".").slice(0, -1).join(".");
+                                width = !isNaN(parseInt(widthStr)) ? parseInt(widthStr) : undefined;
+                                height = !isNaN(parseInt(heightStr)) ? parseInt(heightStr) : undefined;
+                            
+                            }
 
-                            let outputFile = path.join(this.routeInjector.config.env.images.cache, width ? size : "", fileNameNoExt + ".webp");
+                            let fileNameNoExt = path.basename(fileName, path.extname(fileName));
+                            let outputDir = path.dirname(fileName);
 
-                            if (! await promisify(fs.exists)(outputFile)) {
-                                
+                            let outputFile = path.join(this.routeInjector.config.env.images.cache, outputDir, size || "", fileNameNoExt + ".webp");
+
+                            if (!(await promisify(fs.exists)(outputFile))) {
+
+                                await promisify(mkdirp)(path.dirname(outputFile));
                                 sharp(fileAbs).resize(width, height).toFile(outputFile, end);
 
                             } else {
 
                                 req.url = req.url.split(".").slice(0, -1).join(".") + ".webp";
                                 next();
-                                
+
                             }
                         } else
                             next()
                     } else
                         next();
-                } else 
+                } else
                     next();
 
             } catch (err) {
 
+                console.error("WEBP: ", err);
                 next();
             }
         })

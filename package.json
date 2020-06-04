@@ -44,7 +44,7 @@
     "lodash-contrib": "*",
     "mime": "^1.3.4",
     "minimist": "*",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^0.5.5",
     "morgan": "~1.8.1",
     "multer": "~1.2.1",
     "node-zip": "*",
