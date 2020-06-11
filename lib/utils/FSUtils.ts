@@ -154,6 +154,36 @@ class FSUtils {
         }
     }
 
+    static clearCache(cfg, relativePath) {
+
+        let dirName = path.dirname(relativePath);
+        let baseNameNoExt = path.basename(relativePath, path.extname(relativePath));
+
+        let globPath = cfg.cache + dirName + '/**/' + baseNameNoExt + '.*';
+
+        glob(globPath, function (err, files) {
+            if (err) return console.error(err);
+            for (var i = 0; i < files.length; i++) {
+                console.log("Deleting cache file ", files[i]);
+                fs.unlinkSync(files[i]);
+            }
+        });
+    }
+
+    static removeImage(cfg, relativePath) {
+        let absolutePath = cfg.path + relativePath;
+
+        if (fs.statSync(absolutePath).isDirectory()) {
+            let files = fs.readdirSync(absolutePath);
+            if (files.length == 0) {
+                fs.rmdir(absolutePath);
+            }
+        } else {
+            fs.unlinkSync(absolutePath);
+            FSUtils.clearCache(cfg, relativePath);
+        }
+    }
+
     /**
      * Check if path is a file
      */

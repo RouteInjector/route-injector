@@ -186,7 +186,7 @@ class GalleryInjector {
 
             try {
 
-                if (req.url.startsWith(this.prefix + this.galleryEndpoint)) {
+                if (req.url.startsWith(this.prefix + this.galleryEndpoint) && req.method === "GET") {
 
                     const detectSize = /^[0-9]+x[0-9]*$|^[0-9]*x[0-9]+$|^[0-9]+x[0-9]+$/;
                     let fileName: any = req.url.replace(this.prefix + this.galleryEndpoint, "").split("/");
@@ -197,8 +197,9 @@ class GalleryInjector {
                     fileName = fileName.join("/");
 
                     let fileAbs = path.join(this.routeInjector.config.env.images.path, fileName);
+                    let stats = await promisify(fs.stat)(fileAbs);
 
-                    if (await promisify(fs.exists)(fileAbs)) {
+                    if (stats.isFile()) {
 
                         if (supportsWebP(req.headers)) {
                             let maybeSize = req.url.split("/").splice(-2, 1)[0];
@@ -253,7 +254,8 @@ class GalleryInjector {
 
     private handleDeleteImage() {
         this.routeInjector.app.delete(this.prefix + this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.deleteImageRoles).middleware, this.fileExistsMiddleware, (req, res, next) => {
-            FSUtils.remove(req.filepath);
+            let relativePath = req.url.replace(this.prefix + this.galleryEndpoint, "")
+            FSUtils.removeImage(this.routeInjector.config.env.images, relativePath);
             res.statusCode = 200;
             res.json({
                 message: req.filepath + " has been removed"
