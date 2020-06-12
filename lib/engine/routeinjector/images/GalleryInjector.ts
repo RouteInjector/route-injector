@@ -11,6 +11,9 @@ import * as fs from "fs";
 import { promisify } from "util";
 import * as sharp from "sharp";
 import * as mkdirp from "mkdirp";
+import * as querystring from "querystring";
+
+sharp.cache(false);
 
 import ArgumentUtils = require("../../../utils/ArgumentUtils");
 class GalleryInjector {
@@ -189,7 +192,7 @@ class GalleryInjector {
                 if (req.url.startsWith(this.prefix + this.galleryEndpoint) && req.method === "GET") {
 
                     const detectSize = /^[0-9]+x[0-9]*$|^[0-9]*x[0-9]+$|^[0-9]+x[0-9]+$/;
-                    let fileName: any = req.url.replace(this.prefix + this.galleryEndpoint, "").split("/");
+                    let fileName: any = querystring.unescape(req.url).replace(this.prefix + this.galleryEndpoint, "").split("/");
 
                     if (detectSize.test(fileName[fileName.length - 2]))
                         fileName.splice(-2, 1);
@@ -254,7 +257,7 @@ class GalleryInjector {
 
     private handleDeleteImage() {
         this.routeInjector.app.delete(this.prefix + this.galleryEndpoint + "/:path(*)", this.getUserIfExists.middleware, this.checkRole(this.deleteImageRoles).middleware, this.fileExistsMiddleware, (req, res, next) => {
-            let relativePath = req.url.replace(this.prefix + this.galleryEndpoint, "")
+            let relativePath = querystring.unescape(req.url).replace(this.prefix + this.galleryEndpoint, "")
             FSUtils.removeImage(this.routeInjector.config.env.images, relativePath);
             res.statusCode = 200;
             res.json({
