@@ -202,7 +202,7 @@ class GalleryInjector {
                     let fileAbs = path.join(this.routeInjector.config.env.images.path, fileName);
                     let stats = await promisify(fs.stat)(fileAbs);
 
-                    if (stats.isFile()) {
+                    if (stats.isFile() && path.extname(fileAbs) !== ".svg") {
 
                         if (supportsWebP(req.headers)) {
                             let maybeSize = req.url.split("/").splice(-2, 1)[0];
