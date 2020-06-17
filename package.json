@@ -35,6 +35,7 @@
     "deepjson2csv": "*",
     "express": "4.9.8",
     "express-session": "*",
+    "fast-glob": "^3.2.4",
     "glob": "*",
     "http-status-codes": "^1.1.6",
     "imgr": "https://github.com/jlopezr/imgr.git",

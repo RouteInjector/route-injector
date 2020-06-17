@@ -4,9 +4,10 @@
 ///<reference path='../../typings/index.d.ts'/>
 import fs = require('fs');
 import path = require('path');
-import glob = require('glob');
 import mime = require('mime');
 import mkdirp = require('mkdirp');
+import fg = require('fast-glob');
+import { promisify } from "util";
 
 class FSUtils {
 
@@ -73,7 +74,7 @@ class FSUtils {
 
     static getAllFilesRecursivelyByType(path, expression, dirPrefix) {
         let files = glob.sync(FSUtils.join(path, expression));
-        return files.map(function(file){
+        return files.map(function (file) {
             return FSUtils.join(dirPrefix, FSUtils.relative(path, file)).replace(/\\/g, "/");
         });
     }
@@ -154,20 +155,19 @@ class FSUtils {
         }
     }
 
-    static clearCache(cfg, relativePath) {
+    static async clearCache(cfg, relativePath) {
 
         let dirName = path.dirname(relativePath);
         let baseNameNoExt = path.basename(relativePath, path.extname(relativePath));
 
         let globPath = cfg.cache + dirName + '/**/' + baseNameNoExt + '.*';
 
-        glob(globPath, function (err, files) {
-            if (err) return console.error(err);
-            for (var i = 0; i < files.length; i++) {
-                console.log("Deleting cache file ", files[i]);
-                fs.unlinkSync(files[i]);
-            }
-        });
+        const stream = fg.stream([globPath], { dot: true, absolute: true, concurrency: 1 });
+
+        for await (const entry of stream) {
+            console.log("Deleting cache file ", entry);
+            await promisify(fs.unlink)(entry);
+        }
     }
 
     static removeImage(cfg, relativePath) {
