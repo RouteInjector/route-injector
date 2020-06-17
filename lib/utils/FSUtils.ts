@@ -73,7 +73,7 @@ class FSUtils {
     }
 
     static getAllFilesRecursivelyByType(path, expression, dirPrefix) {
-        let files = glob.sync(FSUtils.join(path, expression));
+        let files = fg.sync([FSUtils.join(path, expression)], { dot: true, absolute: true, concurrency: 1 });
         return files.map(function (file) {
             return FSUtils.join(dirPrefix, FSUtils.relative(path, file)).replace(/\\/g, "/");
         });
