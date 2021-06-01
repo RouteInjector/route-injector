@@ -54,7 +54,7 @@
     "path": "*",
     "q": "*",
     "request": "*",
-    "ri-backoffice": "^2.1.48",
+    "ri-backoffice": "^2.1.45",
     "ri-swagger": "^2.0.0",
     "sharp": "^0.23.0",
     "vhost": "*",
