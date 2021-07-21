@@ -1,6 +1,6 @@
 ///<reference path='../../../typings/index.d.ts'/>
 
-import FSUtils =require('../../utils/FSUtils');
+import FSUtils = require('../../utils/FSUtils');
 import mongoose = require('mongoose');
 import PluginRegistry = require("./PluginRegistry");
 import RouteInjector = require("../RouteInjector");
