@@ -59,7 +59,7 @@
     "request": "*",
     "ri-backoffice": "^2.1.51",
     "ri-swagger": "^2.0.0",
-    "sharp": "^0.23.0",
+    "sharp": "^0.30.5",
     "vhost": "*",
     "wordpress-hash-node": "*",
     "zip-stream": "^4.1.0"
